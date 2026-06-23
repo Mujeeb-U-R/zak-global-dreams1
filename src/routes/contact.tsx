@@ -41,7 +41,20 @@ function ContactPage() {
 
   return (
     <Layout>
-      <section className="pb-12">
+      <section className="relative overflow-hidden pb-12">
+        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px]">
+          <img
+            src={contactHero.url}
+            alt=""
+            aria-hidden="true"
+            width={1920}
+            height={1080}
+            fetchPriority="high"
+            decoding="async"
+            className="h-full w-full object-cover opacity-35"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/80 to-slate-950" />
+        </div>
         <div className="mx-auto max-w-7xl px-6 pt-12">
           <SectionHeading
             eyebrow="Get in touch"
