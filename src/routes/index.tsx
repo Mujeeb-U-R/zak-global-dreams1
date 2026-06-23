@@ -226,6 +226,17 @@ function ClosingCTA() {
           transition={{ duration: 0.8 }}
           className="relative overflow-hidden rounded-3xl border border-gold/20 glass-panel-strong p-12 text-center sm:p-20"
         >
+          <img
+            src={ctaBg.url}
+            alt=""
+            aria-hidden="true"
+            width={1920}
+            height={1080}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 -z-10 h-full w-full object-cover opacity-25"
+          />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-br from-slate-950/70 via-slate-950/80 to-slate-950/90" />
           <div className="absolute inset-x-0 top-0 hairline" />
           <p className="text-[10px] uppercase tracking-[0.4em] text-gold">Begin Today</p>
           <h2 className="mt-5 font-display text-4xl text-foreground sm:text-6xl">
