@@ -7,6 +7,7 @@ import { SectionHeading } from "@/components/site/SectionHeading";
 import { useApplyModal } from "@/components/site/ApplyModalProvider";
 import { VISA_CATALOG, COUNTRY_FLAG } from "@/lib/site";
 import portfolioHero from "@/assets/portfolio-hero.jpg.asset.json";
+import { COUNTRY_IMAGE } from "@/assets/country";
 
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
@@ -91,12 +92,27 @@ function PortfolioPage() {
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                   className="group relative overflow-hidden rounded-2xl border border-white/5 glass-panel p-7 transition-all duration-500 hover:-translate-y-1 gold-glow-hover"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="text-4xl">{COUNTRY_FLAG[c.country] ?? "🌐"}</span>
+                  {COUNTRY_IMAGE[c.country] && (
+                    <>
+                      <img
+                        src={COUNTRY_IMAGE[c.country]}
+                        alt=""
+                        aria-hidden="true"
+                        width={768}
+                        height={512}
+                        loading="lazy"
+                        decoding="async"
+                        className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-25 transition-opacity duration-500 group-hover:opacity-40"
+                      />
+                      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-slate-950/85 via-slate-950/70 to-slate-950/90" />
+                    </>
+                  )}
+                  <div className="relative flex items-center justify-between">
+                    <span className="text-4xl drop-shadow-lg">{COUNTRY_FLAG[c.country] ?? "🌐"}</span>
                     <span className="text-[10px] uppercase tracking-[0.25em] text-gold">{c.category}</span>
                   </div>
-                  <h3 className="mt-6 font-display text-2xl text-foreground">{c.country}</h3>
-                  <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-white/5 pt-5 text-xs">
+                  <h3 className="relative mt-6 font-display text-2xl text-foreground">{c.country}</h3>
+                  <dl className="relative mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5 text-xs">
                     <div>
                       <dt className="flex items-center gap-1.5 text-muted-foreground"><Clock className="h-3 w-3 text-gold" />Processing</dt>
                       <dd className="mt-1 text-foreground">{c.processing}</dd>
@@ -109,7 +125,7 @@ function PortfolioPage() {
 
                   <button
                     onClick={() => open({ destination: c.country, category: c.category })}
-                    className="mt-7 inline-flex w-full items-center justify-between rounded-full border border-gold/40 bg-gold/5 px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-gold transition hover:bg-gold/15"
+                    className="relative mt-7 inline-flex w-full items-center justify-between rounded-full border border-gold/40 bg-gold/10 px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-gold backdrop-blur transition hover:bg-gold/20"
                   >
                     Check Eligibility
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

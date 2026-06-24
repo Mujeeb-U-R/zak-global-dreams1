@@ -18,29 +18,35 @@ export const Route = createFileRoute("/about")({
   component: AboutPage,
 });
 
+const ABOUT_VIDEO = "https://videos.pexels.com/video-files/3015527/3015527-uhd_2560_1440_24fps.mp4";
+
 function AboutPage() {
   return (
     <Layout>
-      <section className="relative">
-        <div className="mx-auto max-w-7xl px-6 pt-20">
+      <section className="relative -mt-24 min-h-[80svh] overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <img
+            src={aboutHero}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover animate-ken-burns"
+          />
+          <video
+            src={ABOUT_VIDEO}
+            poster={aboutHero}
+            autoPlay muted loop playsInline
+            className="absolute inset-0 h-full w-full object-cover opacity-80"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/75 via-slate-950/55 to-slate-950" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-transparent to-slate-950/30" />
+        </div>
+        <div className="mx-auto max-w-7xl px-6 pt-40 pb-32">
           <p className="text-[11px] uppercase tracking-[0.5em] text-gold">Our Practice</p>
           <h1 className="mt-6 max-w-4xl font-display text-5xl leading-[1.05] text-foreground sm:text-7xl">
             A discipline built on <span className="text-gold-gradient italic">trust</span>,
             evidence and precise paperwork.
           </h1>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 1.02 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mt-20 max-w-7xl px-6"
-        >
-          <div className="relative overflow-hidden rounded-3xl border border-white/5">
-            <img src={aboutHero} alt="ZAK Consultants office interior" className="h-[520px] w-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
-          </div>
-        </motion.div>
       </section>
 
       <section className="relative py-28">
