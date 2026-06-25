@@ -1,5 +1,5 @@
 {
   "rewrites": [
-    { "source": "/((?!assets/|.*\\.).*)", "destination": "/index.tsx" }
+    { "source": "/((?!assets/|.*\\.).*)", "destination": "/index.html" }
   ]
 }
