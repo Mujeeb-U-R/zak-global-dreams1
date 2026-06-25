@@ -103,17 +103,17 @@ export function ApplyModal({ isOpen, onClose, preset }: Props) {
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="relative my-12 w-full max-w-2xl glass-panel-strong rounded-3xl p-6 sm:p-10 shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8)]"
           >
-            {/* OPTIMIZED: Sized bounding touch region to 44px equivalent via padding to assist small mobile selections */}
+            {/* FIXED: Shifted padding bounding region, added background colors, and set explicit top/right constraints for crisp mobile visibility */}
             <motion.button
               whileTap={{ scale: 0.90 }}
               onClick={onClose}
-              className="absolute right-3 top-3 p-2 rounded-full border border-white/10 text-muted-foreground transition hover:border-gold/40 hover:text-foreground active:bg-white/5"
+              className="absolute right-4 top-4 z-50 p-2.5 rounded-full border border-white/10 bg-slate-900/90 text-gold shadow-md backdrop-blur-sm transition-colors hover:border-gold/40 hover:text-foreground active:bg-slate-800 flex items-center justify-center"
               aria-label="Close"
             >
               <X className="h-5 w-5" />
             </motion.button>
 
-            <header className="mb-8 pr-6">
+            <header className="mb-8 pr-8">
               <p className="text-[10px] uppercase tracking-[0.4em] text-gold">Visa Assessment</p>
               <h2 className="mt-3 font-display text-3xl text-foreground sm:text-4xl">
                 Begin your <span className="text-gold-gradient">journey</span>
@@ -130,7 +130,6 @@ export function ApplyModal({ isOpen, onClose, preset }: Props) {
                   value={form.firstName}
                   onChange={(e) => update("firstName", e.target.value)}
                   placeholder="Enter your first name"
-                  // OPTIMIZED: Implemented text-base (16px) baseline override to completely stop layout auto-zooms on iOS
                   className="input-base text-base"
                 />
               </Field>
