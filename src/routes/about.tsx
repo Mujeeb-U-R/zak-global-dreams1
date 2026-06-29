@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { FileText, ScrollText, UserCheck, Briefcase, Users2, CheckCircle2 } from "lucide-react";
+import { FileText, ScrollText, UserCheck, Briefcase, Users2, CheckCircle2, Shield, Eye, Scale } from "lucide-react";
 import { Layout } from "@/components/site/Layout";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { ApplyButton } from "@/components/site/ApplyButton";
@@ -18,6 +18,24 @@ export const Route = createFileRoute("/about")({
 });
 
 const HERO_TITLE_WORDS = ["A", "discipline", "built", "on", "trust,", "evidence", "and", "precise", "paperwork."];
+
+const PILLARS = [
+  {
+    icon: Scale,
+    title: "Legal Precision",
+    desc: "We treat international borders as high-stakes thresholds. Every single case dossier goes through rigorous regulatory vetting before submission loops begin."
+  },
+  {
+    icon: Eye,
+    title: "Absolute Transparency",
+    desc: "No illusions or generic promises. We critique your financial assets and travel metrics clearly; if your matrix fails a baseline threshold, we restructure it before filing."
+  },
+  {
+    icon: UserCheck,
+    title: "Tailored Advisory",
+    desc: "Every profile gets personal, structured attention. From higher education SOP optimizations to corporate group configurations, your trajectory is heavily mapped."
+  }
+];
 
 function AboutPage() {
   return (
@@ -46,7 +64,6 @@ function AboutHero() {
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-36 pb-20">
         <span className="text-[11px] uppercase tracking-[0.5em] text-gold">Our Practice</span>
         
-        {/* Exact same premium typography dynamic blur reveal animation from Homepage */}
         <h1 className="mt-6 max-w-5xl font-display text-5xl leading-[1.05] text-white sm:text-7xl md:text-[5rem] tracking-tight">
           {HERO_TITLE_WORDS.map((w, i) => (
             <motion.span
@@ -67,26 +84,53 @@ function AboutHero() {
   );
 }
 
-{/* --- 2. OUR COMPANY: CLEAN LAYOUT BALANCING SLATE TEXTS --- */}
+{/* --- 2. OUR COMPANY: CLEAN LAYOUT BALANCING SLATE TEXTS WITH CORPORATE VIRTUES --- */}
 function OurCompany() {
   return (
     <section className="relative py-28 bg-transparent">
-      <div className="mx-auto max-w-7xl gap-16 px-6 grid lg:grid-cols-12 items-start">
-        <div className="lg:col-span-5">
-          <SectionHeading
-            eyebrow="Who we are"
-            title={<>Built for the modern <span className="text-[#b88939] italic">global citizen</span></>}
-          />
+      <div className="mx-auto max-w-7xl px-6">
+        
+        {/* Core Company Description Row */}
+        <div className="grid lg:grid-cols-12 gap-16 items-start mb-24">
+          <div className="lg:col-span-5">
+            <SectionHeading
+              eyebrow="Who we are"
+              title={<>Built for the modern <span className="text-[#b88939] italic">global citizen</span></>}
+            />
+          </div>
+          <div className="lg:col-span-7 space-y-6">
+            <p className="font-serif text-xl italic leading-relaxed text-slate-600 font-light">
+              ZAK Consultants (Pvt.) Ltd. is a registered private limited firm headquartered at GS Tower, Ring Road, Peshawar. We operate at the intersection of legal documentation, embassy procedure, and personal advisory—turning ambiguous visa journeys into structured, repeatable outcomes.
+            </p>
+            <p className="font-sans text-base text-slate-700 leading-relaxed font-normal">
+              We are not a high-volume processing clearinghouse driven by automated templates. Instead, we are an elite consulting practice where every singular client engagement is managed by specialized partners. From compiling complicated source-of-income history to restructuring multi-tier study gaps, our focus stays fixed on defending the absolute integrity of your case file before consular review boards.
+            </p>
+            <p className="font-sans text-base text-slate-700 leading-relaxed font-normal">
+              Whether navigating high-threshold Schengen visit requests, student routes for global destinations, or international corporate group work permits, we implement rigorous internal audits. We do not promise empty miracles; we deliver the factual, evidence-heavy case your global legacy always deserved.
+            </p>
+          </div>
         </div>
-        <div className="lg:col-span-7 space-y-6">
-          {/* Using text-slate-600 to perfectly match the category tagline color weight on Home */}
-          <p className="font-serif text-xl italic leading-relaxed text-slate-600 font-light">
-            ZAK Consultants (Pvt.) Ltd. is a registered private limited firm headquartered at GS Tower, Ring Road, Peshawar. We operate at the intersection of legal documentation, embassy procedure, and personal advisory—turning ambiguous visa journeys into structured outcomes.
-          </p>
-          <p className="font-serif text-xl italic leading-relaxed text-slate-600 font-light">
-            Every client engagement begins with profiling, continues through evidence assembly, and is closed with a defensible submission. We do not promise miracles; we deliver the case your file always deserved.
-          </p>
+
+        {/* Brand Virtues Columns */}
+        <div className="grid gap-8 md:grid-cols-3 border-t border-slate-200/60 pt-16">
+          {PILLARS.map((p, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1, duration: 0.6 }}
+              className="rounded-3xl border border-stone-200/80 bg-[#fdfbf7] p-8 shadow-[0_10px_30px_rgba(27,24,17,0.02)] flex flex-col items-start transition-all duration-300 hover:shadow-[0_20px_40px_rgba(27,24,17,0.06)] hover:border-amber-500/20"
+            >
+              <div className="p-3 rounded-xl bg-white border border-stone-200/60 text-[#b88939] mb-5 shadow-sm">
+                <p.icon className="h-5 w-5" />
+              </div>
+              <h3 className="font-display text-lg font-bold text-stone-900 mb-2">{p.title}</h3>
+              <p className="font-sans text-sm text-stone-600 leading-relaxed font-light">{p.desc}</p>
+            </motion.div>
+          ))}
         </div>
+
       </div>
     </section>
   );
@@ -102,7 +146,6 @@ function OurLegacy() {
           <h2 className="text-4xl md:text-5xl font-display text-slate-900 mt-2">Our Operational Journey</h2>
         </div>
 
-        {/* Dynamic sliding line entry animation matching home lists */}
         <div className="relative border-l border-slate-200 ml-4 md:ml-32 space-y-12">
           {[
             { year: "Phase I", title: "The Advisory Inception", desc: "Formed as a specialized dossier execution unit to serve regional high-net-worth individuals navigating tier-1 global visa pathways." },
@@ -144,7 +187,6 @@ function OurTeam() {
           <p className="text-slate-600 mt-3 text-sm max-w-md mx-auto font-light">Senior partners driving legal documentation strategy and cross-border alignment matrixes.</p>
         </div>
 
-        {/* Identical Interactive Configuration to your home cards */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
           {[
             { name: "Mujeeb Ur Rehman", role: "Managing Director", strategy: "Sovereign Pathways & Corporate Strategy" },

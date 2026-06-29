@@ -4,8 +4,8 @@ export const SITE = {
   // Public path to the site logo. Using the uploaded transparent PNG.
   logo: "/zak_logo-removebg-preview.png",
   tagline: "Your Trusted Partner for Global Visa Solutions",
-  phoneDisplay: "+92 334 944 8824",
-  whatsappNumber: "923349448824",
+  phoneDisplay: "+92 333 864 2226",
+  whatsappNumber: "923338642226",
   email: "zakconsultants21@gmail.com",
   address:
     "Office No. G-62, 5th Floor, GS Tower, Ring Road, Near Hayatabad Toll Plaza, Peshawar",

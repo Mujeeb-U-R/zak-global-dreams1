@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { SiteNav } from "./SiteNav";
 import { SiteFooter } from "./SiteFooter";
+import { WhatsAppFloat } from "./WhatsAppFloat";
 
 export function Layout({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
@@ -18,6 +19,9 @@ export function Layout({ children, className = "" }: { children: ReactNode; clas
       </main>
       
       <SiteFooter />
+
+      {/* --- FLOATING QUICK-ADVISORY SHORTCUT LINK MOUNTED LIVE ON THE BOTTOM LEFT --- */}
+      <WhatsAppFloat />
     </div>
   );
 }

@@ -50,6 +50,26 @@ const FAQ_DATA = [
     question: "How do I begin my assessment path with ZAK Consultants?",
     answer: "You can initiate your process by clicking any 'Check Eligibility' button across our portal to open a tailored assessment window. Alternatively, you can drop a quick inquiry that goes directly to our team via WhatsApp, or visit our central office in Peshawar for a full, physical case consultation.",
   },
+  {
+    category: "Process",
+    question: "How long does the complete document profiling and case structure process take?",
+    answer: "On average, thorough case profiling and document engineering take 7 to 14 business days. This precise preparation timeline ensures all bank statements, sponsorship matrices, and legal declarations are perfectly cross-checked against strict embassy thresholds before official filing.",
+  },
+  {
+    category: "Documentation",
+    question: "What happens if my financial documentation does not meet current embassy thresholds?",
+    answer: "If your financial metrics or bank statement timelines fall short of current regulatory requirements, our consultancy team will immediately notify you. We will advise you on structural adjustments rather than submitting a weak file, ensuring your application is only submitted when it safely clears all compliance benchmarks.",
+  },
+  {
+    category: "Process",
+    question: "Can I track the real-time operational status of my visa application route?",
+    answer: "Yes. Our compliance desk maintains transparent milestone logs for every active case file. Clients receive direct operational telemetry updates at critical intervals, including document attestation clearances, appointment scheduling confirmation, and final submission updates.",
+  },
+  {
+    category: "Compliance",
+    question: "Does your team provide one-on-one preparation sessions for embassy interviews?",
+    answer: "Absolutely. For routes requiring a personal embassy appearance or visa officer interview, we conduct rigorous mock sessions based on real historical criteria. We evaluate communication loops, document navigation, and profiling parameters to ensure absolute confidence.",
+  }
 ];
 
 function FAQPage() {
@@ -74,7 +94,6 @@ function FAQPage() {
   };
 
   return (
-    // BRAND INTEGRATION: Locked canvas style definitions onto your #FAF7F2 premium background matrix
     <div className="min-h-screen text-slate-800" style={{ backgroundColor: "#FAF7F2" }}>
       <Layout>
         {/* --- HERO SECTION --- */}
@@ -143,7 +162,6 @@ function FAQPage() {
                             <span className="text-[10px] font-mono uppercase tracking-widest text-[#b88939] block mb-1 font-semibold">
                               {faq.category}
                             </span>
-                            {/* TEXT ENHANCEMENT: High-contrast Slate-900 text alignment layer */}
                             <h3 className="font-display text-base md:text-lg text-slate-900 font-medium tracking-wide">
                               {faq.question}
                             </h3>
@@ -168,7 +186,6 @@ function FAQPage() {
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.3, ease: "easeInOut" }}
                           >
-                            {/* TEXT ENHANCEMENT: Restructured using clean Slate-600 font lines */}
                             <div className="border-t border-slate-100 bg-[#FAF7F2]/40 px-6 pb-6 pt-4 ml-14 mr-6 mb-2 rounded-xl">
                               <p className="font-serif text-sm md:text-base leading-relaxed text-slate-600 italic">
                                 "{faq.answer}"

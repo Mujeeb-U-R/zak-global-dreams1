@@ -1,9 +1,9 @@
 "use client";
 
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Plane, ShieldCheck, Award, ArrowRight, Star, Quote, Shield } from "lucide-react";
+import { Plane, ShieldCheck, Award, ArrowRight, Star, Quote, Shield, User } from "lucide-react";
 import { Layout } from "@/components/site/Layout";
 import { ApplyButton } from "@/components/site/ApplyButton";
 import { SectionHeading } from "@/components/site/SectionHeading";
@@ -35,13 +35,26 @@ const HOMEPAGE_REVIEWS = [
   { name: "Maryam N.", route: "Schengen Tourist Visa", text: "Honest advice on bank statement timelines. They won't file unless they know your matrix matches the required embassy thresholds perfectly." },
 ];
 
+const HOME_NEWS_IMAGES = [
+  "/news/News1.jpeg",
+  "/news/News2.jpeg",
+  "/news/News3.jpeg",
+  "/news/News4.jpeg",
+  "/news/News5.jpeg",
+  "/news/News6.jpeg",
+  "/news/News7.jpeg"
+];
+
 function HomePage() {
   return (
     <Layout>
       <div className="relative min-h-screen w-full overflow-hidden">
         <Hero />
         <Metrics />
+        {/* --- PLACED PERFECTLY BELOW THE METRICS GRID --- */}
+        <NewsSlideshow />
         <Categories />
+        <CEOQuote />
         <ClientTicker />
         <ClosingCTA />
       </div>
@@ -153,7 +166,6 @@ function Hero() {
   );
 }
 
-/* --- PRESERVED METRICS BLOCK MATCHING IMAGE_C9552A.PNG EXACTLY --- */
 function Metrics() {
   const items = [
     { icon: Award, value: 99, suffix: "%", label: "Visa Approval Rate" },
@@ -161,7 +173,7 @@ function Metrics() {
     { icon: ShieldCheck, value: 1, suffix: "", label: "Registered Pvt. Ltd. Firm" },
   ];
   return (
-    <section className="relative py-28 overflow-hidden bg-transparent">
+    <section className="relative py-28 overflow-hidden bg-transparent pb-12">
       <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#b8893903_1px,transparent_1px),linear-gradient(to_bottom,#b8893903_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
       <div className="absolute -left-20 top-1/2 -translate-y-1/2 w-96 h-96 bg-[#b88939]/[0.03] rounded-full filter blur-3xl z-0 pointer-events-none" />
 
@@ -215,9 +227,57 @@ function Counter({ target }: { target: number }) {
   return <span ref={ref}>{n.toLocaleString()}</span>;
 }
 
+function NewsSlideshow() {
+  return (
+    <section className="relative py-16 bg-transparent overflow-hidden">
+      <div className="mx-auto max-w-7xl px-6 relative z-10">
+        
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-10">
+          <div>
+            
+            <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-stone-900">
+              Latest <span className="text-gold-gradient italic font-normal">Updates</span> and News
+            </h2>
+          </div>
+          
+          <Link
+            to="/news"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-slate-950 shadow-md transition-transform hover:scale-[1.03] active:scale-[0.98]"
+          >
+            Explore All News
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <div className="relative w-full overflow-hidden py-4 select-none">
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#fdfbf7] via-[#fdfbf7]/40 to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#fdfbf7] via-[#fdfbf7]/40 to-transparent z-10 pointer-events-none" />
+
+          <div className="flex w-max gap-6 animate-marquee">
+            {[...HOME_NEWS_IMAGES, ...HOME_NEWS_IMAGES].map((imgSrc, index) => (
+              <div
+                key={index}
+                className="w-[280px] sm:w-[360px] h-[240px] sm:h-[300px] bg-white rounded-2xl border border-stone-200/80 p-3 shadow-[0_10px_30px_rgba(27,24,17,0.03)] flex items-center justify-center overflow-hidden"
+              >
+                <img
+                  src={imgSrc}
+                  alt={`ZAK News Flash Asset ${index + 1}`}
+                  className="max-h-full max-w-full object-contain rounded-lg transition-transform duration-300 hover:scale-[1.02]"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
 function Categories() {
   return (
-    <section className="relative py-28 overflow-hidden bg-transparent">
+    <section className="relative py-28 overflow-hidden bg-transparent pb-16">
       <div className="absolute inset-x-0 top-0 -z-10 h-[600px] w-full opacity-20 pointer-events-none">
         <svg width="100%" height="100%" viewBox="0 0 1440 600" fill="none" className="w-full h-full" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M-100 150C300 450 650 -50 1100 250C1350 400 1500 200 1600 100" stroke="#b88939" strokeWidth="1.2" strokeDasharray="6 6" />
@@ -296,10 +356,10 @@ function Categories() {
                     </div>
                   </div>
                   
-                  <h3 className="mt-6 font-display text-3xl text-gold drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
+                  <h3 className="mt-6 font-display text-4xl font-bold text-gold drop-shadow-[0_2px_5px_rgba(0,0,0,0.7)]">
                     {c.category}
                   </h3>
-                  <p className="mt-3 font-serif italic text-sm font-light text-slate-200 group-hover:text-white transition-colors duration-300 leading-relaxed drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+                  <p className="mt-3 font-serif italic text-base font-normal text-slate-100 group-hover:text-white transition-colors duration-300 leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
                     {c.tagline}
                   </p>
                 </div>
@@ -323,6 +383,61 @@ function Categories() {
             );
           })}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function CEOQuote() {
+  return (
+    <section className="relative py-16 overflow-hidden bg-transparent">
+      <div className="mx-auto max-w-4xl px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="relative rounded-[32px] border border-stone-200/80 bg-[#fdfbf7] p-8 sm:p-12 shadow-[0_20px_50px_rgba(27,24,17,0.06)] flex flex-col md:flex-row items-center gap-8 overflow-hidden transition-shadow duration-300 hover:shadow-[0_30px_60px_rgba(27,24,17,0.1)]"
+        >
+          <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-amber-500/[0.02] rounded-full filter blur-2xl pointer-events-none" />
+          
+          <div className="shrink-0 relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-300 to-amber-500 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity duration-300" />
+            <div className="relative w-24 h-28 sm:w-28 sm:h-36 rounded-2xl border-2 border-amber-500/30 overflow-hidden bg-stone-100 shadow-md">
+              <img 
+                src="/ceo-ziyad-khan.jpg"
+                alt="Ziyad Khan CEO"
+                className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                }}
+              />
+              <div className="hidden absolute inset-0 flex items-center justify-center bg-stone-100 text-amber-600">
+                <Quote className="h-8 w-8 stroke-[1.5] rotate-180 opacity-40" />
+              </div>
+            </div>
+            <div className="absolute -bottom-2 -right-2 h-7 w-7 bg-amber-600 text-white rounded-full flex items-center justify-center shadow-md border border-white z-10">
+              <Quote className="h-3.5 w-3.5 fill-white" />
+            </div>
+          </div>
+
+          <div className="flex-1 text-center md:text-left">
+            <p className="font-serif text-lg sm:text-xl md:text-2xl italic leading-relaxed text-stone-800 whitespace-normal">
+              "Borders aren't barriers; they are structural thresholds waiting for precise preparation. Legitimate global mapping is built on legal precision, not loose chance."
+            </p>
+            
+            <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-center md:justify-start gap-2 text-sm border-t border-stone-200/60 pt-4">
+              <span className="text-amber-700 font-display font-bold text-base tracking-wide">
+                Ziyad Khan
+              </span>
+              <span className="text-stone-400 hidden sm:inline">•</span>
+              <span className="text-xs font-mono uppercase tracking-[0.15em] text-stone-500 font-medium">
+                Chief Executive Officer
+              </span>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

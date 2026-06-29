@@ -28,12 +28,16 @@ function ContactPage() {
 
   const send = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormStatus("SUBMITTING");
     
-    const computedFullName = `${firstName} ${lastName}`.trim() || "Quick Inquiry";
+    if (!firstName.trim() || !lastName.trim() || !phone.trim() || !msg.trim()) {
+      setFormStatus("ERROR");
+      return;
+    }
+
+    setFormStatus("SUBMITTING");
+    const computedFullName = `${firstName} ${lastName}`.trim();
 
     try {
-      // --- FORMSPREE BACKEND INTEGRATION TRANSMISSION ---
       const response = await fetch("https://formspree.io/f/mjgqoevn", {
         method: "POST",
         headers: {
@@ -42,9 +46,9 @@ function ContactPage() {
         },
         body: JSON.stringify({
           fullName: computedFullName,
-          phone: phone || "—",
+          phone: phone,
           visaCategory: "General Inquiry",
-          message: msg || "(no message)",
+          message: msg,
         }),
       });
 
@@ -55,7 +59,6 @@ function ContactPage() {
         setPhone("");
         setMsg("");
         
-        // Retain success overlay briefly for an premium user pacing layout experience
         setTimeout(() => {
           setFormStatus("IDLE");
         }, 3500);
@@ -98,7 +101,7 @@ function ContactPage() {
           <div className="space-y-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              className="overflow-hidden rounded-3xl border border-white/5"
+              className="overflow-hidden rounded-3xl border border-stone-200/60"
             >
               <iframe
                 title="ZAK Consultants Office Map"
@@ -111,10 +114,11 @@ function ContactPage() {
               />
             </motion.div>
 
-            <div className="grid gap-px overflow-hidden rounded-3xl border border-white/5 sm:grid-cols-2">
+            {/* FIXED BACKGROUND: Info grid block wrapper updated with high-contrast lighter borders */}
+            <div className="grid gap-px overflow-hidden rounded-3xl border border-stone-200/60 sm:grid-cols-2 bg-stone-200/50">
               <Info 
                 icon={MapPin} 
-                title="Office (Click to Open Map)" 
+                title="Office" 
                 lines={[SITE.address]} 
                 href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3308.7342963349092!2d71.45425507435851!3d33.97366822187761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38d911d507fd6ddf%3A0x493a3de071281f6d!2sZAK%20Consultants%20(PVT.)%20LTD.!5e0!3m2!1sen!2sus!4v1782351036066!5m2!1sen!2sus" 
               />
@@ -130,7 +134,6 @@ function ContactPage() {
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="relative h-fit rounded-3xl border border-white/5 glass-panel-strong p-8 sm:p-10 overflow-hidden"
           >
-            {/* --- FIXED VIEWPORT POPUP OVERLAY PANEL FOR SUCCESS STATES --- */}
             <AnimatePresence>
               {formStatus === "SUCCESS" && (
                 <motion.div
@@ -162,34 +165,34 @@ function ContactPage() {
               <MessageCircle className="h-5 w-5 text-gold" />
               <h3 className="font-display text-2xl text-foreground">Quick inquiry</h3>
             </div>
-            <p className="mt-2 text-sm text-muted-foreground">Dispatches instantly to our consultancy email inbox routing system.</p>
+            <p className="mt-2 text-sm text-muted-foreground">Dispatches instantly to our team.</p>
 
             <div className="mt-7 grid gap-5">
               <div className="grid gap-4 sm:grid-cols-2">
-                <label className="flex flex-col gap-2">
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">First Name</span>
+                <label className="flex flex-col gap-1.5">
+                  <span className="text-xs sm:text-sm uppercase tracking-[0.15em] font-semibold text-amber-900">First Name</span>
                   <input required value={firstName} onChange={(e) => setFirstName(e.target.value)} className="input-base" placeholder="First name" disabled={formStatus === "SUBMITTING"} />
                 </label>
-                <label className="flex flex-col gap-2">
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Last Name</span>
+                <label className="flex flex-col gap-1.5">
+                  <span className="text-xs sm:text-sm uppercase tracking-[0.15em] font-semibold text-amber-900">Last Name</span>
                   <input required value={lastName} onChange={(e) => setLastName(e.target.value)} className="input-base" placeholder="Last name" disabled={formStatus === "SUBMITTING"} />
                 </label>
               </div>
 
-              <label className="flex flex-col gap-2">
-                <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Phone</span>
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs sm:text-sm uppercase tracking-[0.15em] font-semibold text-amber-900">Phone</span>
                 <input required value={phone} onChange={(e) => setPhone(e.target.value)} className="input-base" placeholder="+92 3xx xxxxxxx" disabled={formStatus === "SUBMITTING"} />
               </label>
               
-              <label className="flex flex-col gap-2">
-                <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Message</span>
-                <textarea value={msg} onChange={(e) => setMsg(e.target.value)} rows={4} className="input-base resize-none" placeholder="Tell us where you'd like to travel..." disabled={formStatus === "SUBMITTING"} />
+              <label className="flex flex-col gap-1.5">
+                <span className="text-xs sm:text-sm uppercase tracking-[0.15em] font-semibold text-amber-900">Message</span>
+                <textarea required value={msg} onChange={(e) => setMsg(e.target.value)} rows={4} className="input-base resize-none" placeholder="Tell us where you'd like to travel..." disabled={formStatus === "SUBMITTING"} />
               </label>
 
               <div className="min-h-[20px] mt-1">
                 {formStatus === "ERROR" && (
-                  <p className="text-xs text-rose-400 font-medium">
-                    Transmission error. Please check your network and try again.
+                  <p className="text-sm text-rose-500 font-semibold">
+                    Please fill out all fields completely before submitting.
                   </p>
                 )}
                 {formStatus === "SUBMITTING" && (
@@ -223,11 +226,14 @@ function Info({
     <Tag 
       href={href} 
       {...(href ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className="block bg-slate-950/40 p-7 transition hover:bg-slate-900/60 group cursor-pointer"
+      /* FIXED BACKGROUND: Changed dark background classes to clean white/80 panels for maximum legibility */
+      className="block bg-white/80 p-7 transition hover:bg-white group cursor-pointer"
     >
-      <Icon className="h-5 w-5 text-gold transition-transform group-hover:scale-110 duration-300" />
-      <div className="mt-4 text-[10px] uppercase tracking-[0.25em] text-muted-foreground group-hover:text-gold transition-colors duration-300">{title}</div>
-      {lines.map((l, i) => (<p key={i} className="mt-1 text-sm text-foreground">{l}</p>))}
+      {/* Deepened icon tone for premium layout structure */}
+      <Icon className="h-5 w-5 text-amber-600 transition-transform group-hover:scale-110 duration-300" />
+      <div className="mt-4 text-xs uppercase tracking-[0.15em] font-semibold text-amber-900 group-hover:text-amber-600 transition-colors duration-300">{title}</div>
+      {/* FIXED CONTRAST: Shifted text color from light gray to deep text-stone-900 gray strings */}
+      {lines.map((l, i) => (<p key={i} className="mt-1.5 text-base text-stone-900 font-normal leading-relaxed">{l}</p>))}
     </Tag>
   );
 }

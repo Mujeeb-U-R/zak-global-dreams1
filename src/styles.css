@@ -55,7 +55,7 @@
 .dark {
   /* Luxury ivory base with gold foreground */
   --background: oklch(0.99 0.005 90);
-  --foreground: oklch(0.55 0.13 70);            /* gold text */
+  --foreground: oklch(0.55 0.13 70);       /* gold text */
 
   --card: oklch(0.985 0.008 88);
   --card-foreground: oklch(0.55 0.13 70);
@@ -94,6 +94,13 @@
 @layer base {
   * { border-color: var(--color-border); }
 
+  html {
+    /* ACCESSIBILITY UPGRADE: Incremented the base root font metric to 18px. 
+        This automatically scales up every font token using relative 'rem' units globally, 
+        making paragraph elements, layouts, and cards instantly larger and easier to scan. */
+    font-size: 18px;
+  }
+
   html, body {
     background: var(--background);
     color: var(--color-foreground);
@@ -105,11 +112,13 @@
   body {
     background: var(--gradient-night);
     background-attachment: fixed;
+    /* Increased leading height line ratio slightly to optimize tracking space for older users */
+    line-height: 1.65;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em; /* Loosened letter-spacing metric for high-legibility titles */
     color: var(--gold-deep);
   }
 
@@ -176,15 +185,17 @@
 
 @utility input-base {
   width: 100%;
-  border-radius: 0.5rem;
+  border-radius: 0.625rem; /* Smoothed corner radii to handle taller layouts */
   border: 1px solid oklch(0.62 0.14 72 / 25%);
   background: oklch(1 0 0 / 80%);
-  padding: 0.75rem 1rem;
-  font-size: 0.875rem;
+  /* Increased tap padding from 0.75rem to 0.85rem for optimal touch-target scaling */
+  padding: 0.85rem 1.15rem;
+  /* FORCED MOBILITY CRITERIA: Locked text size to 16px to completely eliminate mobile auto-zoom on field focus */
+  font-size: 16px !important;
   color: var(--color-foreground);
   outline: none;
   transition: border-color 200ms ease, box-shadow 200ms ease;
-  &::placeholder { color: oklch(0.7 0.08 70); }
+  &::placeholder { color: oklch(0.65 0.07 70); } /* Deepened contrast placeholder ratio */
   &:focus { border-color: oklch(0.62 0.14 72 / 70%); box-shadow: 0 0 0 3px oklch(0.62 0.14 72 / 15%); }
 }
 
@@ -214,4 +225,20 @@
 /* No lift for nav links */
 @utility nav-link-no-lift {
   &:hover { transform: none !important; }
+}
+
+/* --- INFINITE NEWS SLIDESHOW MARQUEE ANIMATION --- */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@utility animate-marquee {
+  animation: marquee 35s linear infinite;
+}
+
+@utility pause-on-hover {
+  &:hover {
+    animation-play-state: paused;
+  }
 }
