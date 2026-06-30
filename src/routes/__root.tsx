@@ -13,6 +13,9 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ApplyModalProvider } from "@/components/site/ApplyModalProvider";
 
+// Import the WhatsApp floating button component globally
+import { WhatsAppFloating } from "@/components/ui/WhatsAppFloating";
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -89,7 +92,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "data:," }, // Injected here to suppress root favicon 404 console crashes
+      { rel: "icon", href: "data:," }, 
       { rel: "preconnect", href: "https://videos.pexels.com" },
     ],
   }),
@@ -116,7 +119,11 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ApplyModalProvider>
+        {/* Dynamic page contents match routing paths here */}
         <Outlet />
+        
+        {/* Globally mounts the floating widget across every view */}
+        <WhatsAppFloating />
       </ApplyModalProvider>
     </QueryClientProvider>
   );
