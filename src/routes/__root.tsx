@@ -13,7 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ApplyModalProvider } from "@/components/site/ApplyModalProvider";
 
-// Import the WhatsApp floating button component globally
+// Corrected named import matching your file exactly
 import { WhatsAppFloat } from "@/components/site/WhatsAppFloat";
 
 function NotFoundComponent() {
@@ -119,10 +119,10 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ApplyModalProvider>
-        {/* Dynamic page contents match routing paths here */}
+        {/* Dynamic content rendering outlet */}
         <Outlet />
         
-        {/* Globally mounts the floating widget across every view */}
+        {/* Corrected name element rendering to layout wrapper */}
         <WhatsAppFloat />
       </ApplyModalProvider>
     </QueryClientProvider>
