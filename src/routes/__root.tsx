@@ -14,7 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ApplyModalProvider } from "@/components/site/ApplyModalProvider";
 
 // Import the WhatsApp floating button component globally
-import { WhatsAppFloating } from "@/components/ui/WhatsAppFloating";
+import { WhatsAppFloat } from "@/components/site/WhatsAppFloat";
 
 function NotFoundComponent() {
   return (
@@ -123,7 +123,7 @@ function RootComponent() {
         <Outlet />
         
         {/* Globally mounts the floating widget across every view */}
-        <WhatsAppFloating />
+        <WhatsAppFloat />
       </ApplyModalProvider>
     </QueryClientProvider>
   );
