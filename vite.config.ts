@@ -1,14 +1,17 @@
-// @lovable.dev/vite-tanstack-config already includes default plugins.
-// Passing additional manual settings safely via defineConfig overrides:
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    server: { entry: "server" },
+    server: {
+      entry: "server"
+    },
   },
-  vite: {
-    // Explicitly ensures Vite maps the root static public directory during the asset build loop
-    publicDir: "public",
+  nitro: {
+    preset: "vercel",
+    output: {
+      dir: ".vercel/output",
+      serverDir: ".vercel/output/functions/__server.func",
+      publicDir: ".vercel/output/static",
+    },
   },
 });
