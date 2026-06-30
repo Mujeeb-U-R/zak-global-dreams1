@@ -15,13 +15,13 @@ export const Route = createFileRoute("/news")({
 
 // --- PURE CASE-SENSITIVE PATHS MATCHING YOUR FILENAMES ---
 const NEWS_IMAGES = [
-  "/News1.jpeg",
-  "/News2.jpeg",
-  "/News3.jpeg",
-  "/News4.jpeg",
-  "/News5.jpeg",
-  "/News6.jpeg",
-  "/News7.jpeg"
+  "/news/News1.jpeg",
+  "/news/News2.jpeg",
+  "/news/News3.jpeg",
+  "/news/News4.jpeg",
+  "/news/News5.jpeg",
+  "/news/News6.jpeg",
+  "/news/News7.jpeg"
 ];
 
 function NewsPage() {
