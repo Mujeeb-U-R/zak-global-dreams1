@@ -13,7 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ApplyModalProvider } from "@/components/site/ApplyModalProvider";
 
-// Corrected named import matching your file exactly
+// Import your button layout matching your folder setup exactly
 import { WhatsAppFloat } from "@/components/site/WhatsAppFloat";
 
 function NotFoundComponent() {
@@ -108,6 +108,11 @@ function RootShell({ children }: { children: ReactNode }) {
       <head><HeadContent /></head>
       <body>
         {children}
+        
+        {/* MOVED HERE: Hardcoded directly into the base HTML shell markup.
+            Vite cannot optimize or strip this out during builds now! */}
+        <WhatsAppFloat />
+
         <Scripts />
       </body>
     </html>
@@ -119,11 +124,8 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ApplyModalProvider>
-        {/* Dynamic content rendering outlet */}
+        {/* Handles path switches cleanly */}
         <Outlet />
-        
-        {/* Corrected name element rendering to layout wrapper */}
-        <WhatsAppFloat />
       </ApplyModalProvider>
     </QueryClientProvider>
   );
