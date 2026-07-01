@@ -52,6 +52,7 @@ function HomePage() {
         <Hero />
         <Metrics />
         {/* --- PLACED PERFECTLY BELOW THE METRICS GRID --- */}
+        <CompanyVision />
         <NewsSlideshow />
         <Categories />
         <CEOQuote />
@@ -72,7 +73,7 @@ function Hero() {
       });
     }
   }, []);
-<div>data-version="2.0.0"</div>
+
   return (
     <section className="relative -mt-24 flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#030712]">
       <div className="absolute inset-0 z-0 select-none pointer-events-none">
@@ -227,6 +228,40 @@ function Counter({ target }: { target: number }) {
   return <span ref={ref}>{n.toLocaleString()}</span>;
 }
 
+function CompanyVision() {
+  return (
+    <section className="relative py-20 overflow-hidden bg-transparent">
+      <div className="mx-auto max-w-5xl px-6 relative z-10 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex flex-col items-center"
+        >
+          <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-gold mb-4">Our Vision</span>
+          <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-gold max-w-3xl leading-tight">
+            Architecting flawless pathways for <span className="text-gold-gradient italic font-normal">global mobility</span>.
+          </h2>
+          <p className="mt-6 max-w-2xl font-sans text-base sm:text-lg text-slate-400 leading-relaxed font-light">
+            At ZAK Consultants, our vision is to simplify international exploration through peerless compliance modeling and strategic asset assembly. We map legal ecosystems deliberately, ensuring your visa frameworks process safely through every global border threshold.
+          </p>
+          <div className="mt-10">
+            <Link
+              to="/about"
+              
+              className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] text-slate-950 shadow-md transition-transform hover:scale-[1.03] active:scale-[0.98]"
+            >
+              Learn more about us
+              <ArrowRight className="h-4 w-4 text-slate-950 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 function NewsSlideshow() {
   return (
     <section className="relative py-16 bg-transparent overflow-hidden">
@@ -234,7 +269,6 @@ function NewsSlideshow() {
         
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-10">
           <div>
-            
             <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-stone-900">
               Latest <span className="text-gold-gradient italic font-normal">Updates</span> and News
             </h2>
@@ -348,7 +382,7 @@ function Categories() {
 
                 <div>
                   <div className="flex items-center justify-between">
-                    <p className="text-[10px] font-mono uppercase tracking-[0.35em] text-slate-400 group-hover:text-white/70 transition-colors duration-300">
+                    <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-slate-400 group-hover:text-white/70 transition-colors duration-300">
                       0{i + 1}
                     </p>
                     <div className="p-2 rounded-full border border-white/10 bg-slate-900/40 text-gold transition-all duration-500 transform group-hover:rotate-45 group-hover:bg-gold group-hover:text-slate-950 group-hover:border-transparent">
@@ -390,39 +424,38 @@ function Categories() {
 
 function CEOQuote() {
   return (
-    <section className="relative py-16 overflow-hidden bg-transparent">
-      <div className="mx-auto max-w-4xl px-6">
+    <section className="relative py-16 bg-transparent">
+      <div className="mx-auto max-w-4xl px-6 pt-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative rounded-[32px] border border-stone-200/80 bg-[#fdfbf7] p-8 sm:p-12 shadow-[0_20px_50px_rgba(27,24,17,0.06)] flex flex-col md:flex-row items-center gap-8 overflow-hidden transition-shadow duration-300 hover:shadow-[0_30px_60px_rgba(27,24,17,0.1)]"
+          className="relative rounded-[32px] border border-stone-200/80 bg-[#fdfbf7] p-8 sm:p-14 pt-36 md:pt-14 shadow-[0_20px_50px_rgba(27,24,17,0.06)] flex flex-col md:flex-row items-start gap-8 overflow-visible min-h-[260px] transition-shadow duration-300 hover:shadow-[0_30px_60px_rgba(27,24,17,0.1)]"
         >
           <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-amber-500/[0.02] rounded-full filter blur-2xl pointer-events-none" />
           
-          <div className="shrink-0 relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-300 to-amber-500 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity duration-300" />
-            <div className="relative w-24 h-28 sm:w-28 sm:h-36 rounded-2xl border-2 border-amber-500/30 overflow-hidden bg-stone-100 shadow-md">
-              <img 
-                src="/ceo-ziyad-khan.jpg"
-                alt="Ziyad Khan CEO"
-                className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                }}
-              />
-              <div className="hidden absolute inset-0 flex items-center justify-center bg-stone-100 text-amber-600">
-                <Quote className="h-8 w-8 stroke-[1.5] rotate-180 opacity-40" />
+          {/* --- OVERLAPPING HALF-OUT/HALF-IN BADGE POSITIONED ON THE CORNER EDGE --- */}
+          <div className="absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none select-none perspective-1000">
+            <motion.div 
+              transition={{ 
+                rotateY: { duration: 25, ease: "linear", repeat: Infinity }
+              }}
+              className="w-36 h-36 flex items-center justify-center transform-gpu preserve-3d"
+            >
+              <div className="relative w-full h-full flex items-center justify-center bg-transparent p-2">
+                <img 
+                  src={SITE.logo}
+                  alt="ZAK Consultants Large Transparent Logo"
+                  className="max-h-full max-w-full object-contain filter drop-shadow-[0_10px_15px_rgba(0,0,0,0.25)]"
+                />
               </div>
-            </div>
-            <div className="absolute -bottom-2 -right-2 h-7 w-7 bg-amber-600 text-white rounded-full flex items-center justify-center shadow-md border border-white z-10">
-              <Quote className="h-3.5 w-3.5 fill-white" />
-            </div>
+            </motion.div>
           </div>
 
-          <div className="flex-1 text-center md:text-left">
+          <div className="shrink-0 w-2 md:w-4 h-px" />
+
+          <div className="flex-1 text-center md:text-left relative z-10 pl-6 md:pl-10 mt-6 md:mt-0">
             <p className="font-serif text-lg sm:text-xl md:text-2xl italic leading-relaxed text-stone-800 whitespace-normal">
               "Borders aren't barriers; they are structural thresholds waiting for precise preparation. Legitimate global mapping is built on legal precision, not loose chance."
             </p>
@@ -436,6 +469,10 @@ function CEOQuote() {
                 Chief Executive Officer
               </span>
             </div>
+          </div>
+
+          <div className="absolute top-6 right-6 h-7 w-7 bg-amber-600/10 text-amber-700 rounded-full flex items-center justify-center pointer-events-none select-none">
+            <Quote className="h-3.5 w-3.5 fill-current" />
           </div>
         </motion.div>
       </div>
