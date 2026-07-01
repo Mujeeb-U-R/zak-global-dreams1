@@ -347,10 +347,10 @@ function Categories() {
         <div className="mt-16 grid gap-6 md:grid-cols-2">
           {VISA_CATALOG.map((c, i) => {
             const localBgImages = [
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuQFTSXlcdilGU0B_6vmrrRo6fcTJPh2Ie1JHf4Mkvr2TpFHdwqAWrK08y&s=10", 
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXFDnn1PFvQ1FuvfXacFdMyESLHR-M2aJPomoIQESslKM_-8i769nZ6z8&s=10", 
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSInVUHz008Hgktt9rpUfW2SLRpuCQOA-cLQnk0qzNiqVhqZVw2-aIp0Jg&s=10", 
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVF7XmqfWADBK7fAXrVRe272uinEiCZ-u-eN5VF234zKlha8PIwoGtYd6U&s=10"  
+              "/Work_Permit_pic.jpg", 
+              "/Visit_Visa_pic.jpg", 
+              "/Group_Tour_pic.jpg", 
+              "/Student_Visa_pic.jpg",  
             ];
 
             const currentBg = localBgImages[i] || localBgImages[0];
