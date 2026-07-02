@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { Star, Quote } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Star, Quote, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/site/Layout";
 import { SectionHeading } from "@/components/site/SectionHeading";
 
@@ -17,36 +18,16 @@ export const Route = createFileRoute("/gallery")({
 });
 
 const GRID = [
-  { 
-    src: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80", 
-    h: "row-span-2", 
-    label: "Schengen Visa — Approved" 
-  },
-  { 
-    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvF6i6EvIz5nWFMqnnZSoOV2ZwaLEQxFSl2_9RtfYDa8e507mQH92nOkd2&s=10", 
-    h: "", 
-    label: "Premium Lounge — Istanbul" 
-  },
-  { 
-    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXISipfyA9YnH-HfSCRHEu3MQGwfAax3NiFDvMZSqY72saE9chmqtUckxE&s=10", 
-    h: "", 
-    label: "Bosphorus — Türkiye Tour" 
-  },
-  { 
-    src: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80", 
-    h: "row-span-2", 
-    label: "Business Travel — Singapore" 
-  },
-  { 
-    src: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80", 
-    h: "", 
-    label: "U.K Student Visa — Granted" 
-  },
-  { 
-    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw3Z9pH13XcqMi-CilpcmKnt2eNW8WAIPQQXbtaFgtrRbR5eFJybl6WmY&s=10", 
-    h: "", 
-    label: "Group Tour — Morocco" 
-  },
+  { src: "/opening_ceremony/ceremony1.jpeg", label: "Opening Ceremony — Moment 01" },
+  { src: "/opening_ceremony/ceremony2.jpeg", label: "Opening Ceremony — Moment 02" },
+  { src: "/opening_ceremony/ceremony3.jpeg", label: "Opening Ceremony — Moment 03" },
+  { src: "/opening_ceremony/ceremony4.jpeg", label: "Opening Ceremony — Moment 04" },
+  { src: "/opening_ceremony/ceremony5.jpeg", label: "Opening Ceremony — Moment 05" },
+  { src: "/opening_ceremony/ceremony6.jpeg", label: "Opening Ceremony — Moment 06" },
+  { src: "/opening_ceremony/ceremony7.jpeg", label: "Opening Ceremony — Moment 07" },
+  { src: "/opening_ceremony/ceremony8.jpeg", label: "Opening Ceremony — Moment 08" },
+  { src: "/opening_ceremony/ceremony9.jpeg", label: "Opening Ceremony — Moment 09" },
+  { src: "/opening_ceremony/ceremony10.jpeg", label: "Opening Ceremony — Moment 10" },
 ];
 
 const REVIEWS = [
@@ -59,6 +40,40 @@ const REVIEWS = [
 ];
 
 function GalleryPage() {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (activeIndex === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") handleNext();
+      if (e.key === "ArrowLeft") handlePrev();
+      if (e.key === "Escape") setActiveIndex(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeIndex]);
+
+  useEffect(() => {
+    if (activeIndex !== null) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => { document.body.style.overflow = "unset"; };
+  }, [activeIndex]);
+
+  const handleNext = () => {
+    if (activeIndex !== null) {
+      setActiveIndex((activeIndex + 1) % GRID.length);
+    }
+  };
+
+  const handlePrev = () => {
+    if (activeIndex !== null) {
+      setActiveIndex((activeIndex - 1 + GRID.length) % GRID.length);
+    }
+  };
+
   return (
     <Layout>
       <section className="relative pb-16">
@@ -71,27 +86,110 @@ function GalleryPage() {
         </div>
       </section>
 
+      {/* --- EXECUTIVE EDITORIAL MASONRY GRID --- */}
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="grid auto-rows-[220px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 space-y-6">
             {GRID.map((it, i) => (
               <motion.figure
                 key={i}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ delay: i * 0.08, duration: 0.7 }}
-                className={`group relative overflow-hidden rounded-2xl border border-white/5 ${it.h}`}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ delay: i * 0.04, duration: 0.6 }}
+                onClick={() => setActiveIndex(i)}
+                className="break-inside-avoid group relative overflow-hidden rounded-2xl border border-stone-200 bg-[#fdfbf7] p-2.5 cursor-zoom-in shadow-xl hover:shadow-2xl hover:border-amber-500/40 transition-all duration-500"
               >
-                <img src={it.src} alt={it.label} className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
-                <figcaption className="absolute bottom-4 left-5 text-xs uppercase tracking-[0.2em] text-gold">{it.label}</figcaption>
+                <div className="relative overflow-hidden rounded-xl bg-stone-950">
+                  {/* Subtle warm tint and slight desaturation that transitions smoothly on hover */}
+                  <img 
+                    src={it.src} 
+                    alt={it.label} 
+                    className="w-full h-auto object-cover grayscale-[15%] sepia-[10%] brightness-[96%] transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:grayscale-0 group-hover:sepia-0 group-hover:brightness-100" 
+                  />
+                  
+                  {/* Internal ambient dark frame rim */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none" />
+                </div>
+                
+                {/* Premium Corporate metadata label line */}
+                <div className="mt-3 px-2 pb-1 flex items-center justify-between">
+                  <figcaption className="text-[10px] font-mono uppercase tracking-[0.18em] text-stone-500 group-hover:text-amber-700 transition-colors duration-300 font-semibold">
+                    {it.label}
+                  </figcaption>
+                  <span className="text-[10px] font-serif text-stone-400 italic group-hover:translate-x-1 transition-transform duration-300">View →</span>
+                </div>
               </motion.figure>
             ))}
           </div>
         </div>
       </section>
 
+      {/* --- LIGHTBOX MODAL --- */}
+      <AnimatePresence>
+        {activeIndex !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveIndex(null)}
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950/95 p-4 backdrop-blur-sm select-none"
+          >
+            <div className="absolute top-6 right-6 z-50">
+              <button 
+                onClick={(e) => { e.stopPropagation(); setActiveIndex(null); }}
+                className="p-3 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:text-gold transition-all duration-300 shadow-xl"
+              >
+                <X className="h-5 w-5 stroke-[2]" />
+              </button>
+            </div>
+
+            <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex items-center justify-between z-40 pointer-events-none">
+              <button
+                onClick={(e) => { e.stopPropagation(); handlePrev(); }}
+                className="p-4 rounded-full bg-slate-900/60 border border-white/10 text-white hover:bg-slate-900 hover:text-gold transition-all duration-300 pointer-events-auto"
+              >
+                <ChevronLeft className="h-6 w-6 stroke-[2]" />
+              </button>
+
+              <button
+                onClick={(e) => { e.stopPropagation(); handleNext(); }}
+                className="p-4 rounded-full bg-slate-900/60 border border-white/10 text-white hover:bg-slate-900 hover:text-gold transition-all duration-300 pointer-events-auto"
+              >
+                <ChevronRight className="h-6 w-6 stroke-[2]" />
+              </button>
+            </div>
+
+            <motion.div
+              key={activeIndex}
+              initial={{ scale: 0.97, opacity: 0.8 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.97, opacity: 0.8 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-5xl max-h-[85vh] overflow-hidden rounded-2xl border border-white/10 bg-slate-900 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.9)] flex items-center justify-center"
+            >
+              <img
+                src={GRID[activeIndex].src}
+                alt={GRID[activeIndex].label}
+                className="max-w-full max-h-[85vh] object-contain"
+              />
+            </motion.div>
+
+            <motion.div 
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              className="mt-6 flex items-center gap-4 text-xs font-mono uppercase tracking-[0.2em] bg-slate-900/80 border border-white/5 backdrop-blur-md px-6 py-2.5 rounded-full shadow-lg"
+            >
+              <span className="text-amber-500 font-bold">{activeIndex + 1} / {GRID.length}</span>
+              <span className="w-px h-3 bg-white/20" />
+              <span className="text-slate-300">{GRID[activeIndex].label}</span>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* --- REVIEWS BLOCK --- */}
       <section className="pb-28">
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
@@ -107,7 +205,6 @@ function GalleryPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.7 }}
-                // OPTIMIZED: Applied high-contrast creamy white card styles and dark stone text parameters directly
                 className="relative rounded-[32px] bg-[#fdfbf7] border border-stone-200 p-8 shadow-2xl flex flex-col justify-between text-slate-900 select-none min-h-[240px]"
               >
                 <div>
