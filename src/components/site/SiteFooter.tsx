@@ -10,27 +10,29 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 py-20">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <div className="flex items-center gap-3">
+            {/* 🛠️ UPDATED: Wrapped branding in a Link to Home */}
+            <Link to="/" className="flex items-center gap-3 group">
               <img
                 src={SITE.logo}
                 alt="ZAK Consultants logo"
-                className="h-10 w-10 rounded-full border-2 border-gold/40 object-contain bg-transparent p-1"
+                className="h-10 w-10 rounded-full border-2 border-gold/40 object-contain bg-transparent p-1 transition-transform group-hover:scale-105"
                 width={40}
                 height={40}
               />
               <div className="flex flex-col leading-tight">
-                <span className="font-display text-lg text-white">ZAK Consultants</span>
+                <span className="font-display text-lg text-white group-hover:text-gold transition-colors">
+                  ZAK Consultants
+                </span>
                 <span className="text-[10px] uppercase tracking-[0.3em] text-slate-400">
                   Pvt. Ltd.
                 </span>
               </div>
-            </div>
+            </Link>
             
             <p className="mt-6 max-w-sm font-serif text-lg italic text-slate-300">
               “{SITE.tagline}”
             </p>
             
-            {/* --- TOUCH DIMENSION SLOTS FOR SOCIAL MEDIA TRACES --- */}
             <div className="mt-6 flex items-center gap-1 text-slate-400 -ml-2">
               <motion.a 
                 whileTap={{ scale: 0.90 }} 
@@ -61,7 +63,6 @@ export function SiteFooter() {
                   <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.01.08 1.53.63 3.02 1.6 4.17 1.12 1.32 2.75 2.15 4.43 2.3v3.83c-1.7-.06-3.38-.63-4.74-1.68-.26-.2-.5-.42-.73-.65v6.43c.02 3.8-2.5 7.42-6.25 8.16-3.88.87-8.12-1.2-9.45-4.96C-.2 13.56 1.42 8.91 5.4 7.74c1.4-.43 2.9-.38 4.25.18v3.91c-1.12-.54-2.46-.53-3.55.07-1.37.72-2.13 2.27-1.89 3.82.3 1.83 2.05 3.16 3.89 2.87 1.48-.2 2.63-1.42 2.76-2.92.01-1.83.01-11.66.01-15.61h1.65z"/>
                 </svg>
               </motion.a>
-              
             </div>
 
             <p className="mt-6 text-xs uppercase tracking-[0.25em] text-gold/90 font-mono">

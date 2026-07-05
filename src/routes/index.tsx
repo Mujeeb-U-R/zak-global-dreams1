@@ -3,7 +3,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Plane, ShieldCheck, Award, ArrowRight, Star, Quote, Shield, X } from "lucide-react";
+import { Plane, ShieldCheck, Award, ArrowRight, Star, Quote, Shield, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Layout } from "@/components/site/Layout";
 import { ApplyButton } from "@/components/site/ApplyButton";
 import { SectionHeading } from "@/components/site/SectionHeading";
@@ -175,18 +175,20 @@ function Hero() {
 }
 
 {/* --- INTERACTIVE PAPUP SLIDESHOW MODULE --- */}
+/* --- INTERACTIVE NEWS SLIDESHOW MODULE --- */
 function NewsSlideshow() {
-  const [activeImage, setActiveImage] = useState<string | null>(null);
+  const [index, setIndex] = useState(0);
 
-  // Freeze device background document layers when lightbox mounts
+  // Auto-play: Change slide every 3 seconds
   useEffect(() => {
-    if (activeImage) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => { document.body.style.overflow = "unset"; };
-  }, [activeImage]);
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % HOME_NEWS_IMAGES.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const next = () => setIndex((i) => (i + 1) % HOME_NEWS_IMAGES.length);
+  const prev = () => setIndex((i) => (i - 1 + HOME_NEWS_IMAGES.length) % HOME_NEWS_IMAGES.length);
 
   return (
     <section className="relative py-16 bg-transparent overflow-hidden">
@@ -197,7 +199,6 @@ function NewsSlideshow() {
               Latest <span className="text-gold-gradient italic font-normal">Updates</span> and News
             </h2>
           </div>
-          
           <Link
             to="/news"
             className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-slate-950 shadow-md transition-transform hover:scale-[1.03] active:scale-[0.98]"
@@ -207,72 +208,51 @@ function NewsSlideshow() {
           </Link>
         </div>
 
-        <div className="relative w-full overflow-hidden py-4 select-none">
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#fdfbf7] via-[#fdfbf7]/40 to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#fdfbf7] via-[#fdfbf7]/40 to-transparent z-10 pointer-events-none" />
+        {/* Slideshow Container */}
+        <div className="relative w-full max-w-sm mx-auto">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-stone-200 shadow-xl bg-white p-1.5">
+    <AnimatePresence mode="wait">
+      <motion.img
+        key={index}
+        src={HOME_NEWS_IMAGES[index]}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -20 }}
+        transition={{ duration: 0.5 }}
+        className="w-full h-full object-contain rounded-lg"
+      />
+    </AnimatePresence>
+  </div>
 
-          {/* 🛠️ ANIMATION CHANGER: Injected activeImage parameter toggle to pause marquee animation runtime gracefully */}
-          <div 
-            className={`flex w-max gap-6 animate-marquee ${
-              activeImage ? "animate-play-paused" : "animate-play-running"
-            }`}
+          {/* Navigation Arrows */}
+          <button 
+            onClick={prev} 
+            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-white/90 rounded-full shadow-lg hover:bg-white transition-colors z-20"
+            aria-label="Previous slide"
           >
-            {[...HOME_NEWS_IMAGES, ...HOME_NEWS_IMAGES].map((imgSrc, index) => (
-              <div
-                key={index}
-                onClick={() => setActiveImage(imgSrc)}
-                className="w-[280px] sm:w-[360px] h-[240px] sm:h-[300px] bg-white rounded-2xl border border-stone-200/80 p-3 shadow-[0_10px_30px_rgba(27,24,17,0.03)] flex items-center justify-center overflow-hidden cursor-zoom-in active:scale-[0.98] transition-transform duration-200"
-              >
-                <img
-                  src={imgSrc}
-                  alt={`ZAK News Flash Asset ${index + 1}`}
-                  className="max-h-full max-w-full object-contain rounded-lg transition-transform duration-300 hover:scale-[1.02]"
-                  loading="lazy"
-                />
-              </div>
+            <ChevronLeft className="w-5 h-5 text-stone-800" />
+          </button>
+          <button 
+            onClick={next} 
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-white/90 rounded-full shadow-lg hover:bg-white transition-colors z-20"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-5 h-5 text-stone-800" />
+          </button>
+
+          {/* Pagination Dots */}
+          <div className="flex justify-center gap-2 mt-6">
+            {HOME_NEWS_IMAGES.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIndex(i)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${i === index ? "bg-amber-600 w-6" : "bg-stone-300 hover:bg-stone-400"}`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
             ))}
           </div>
         </div>
       </div>
-
-      {/* --- PREMIUM FULLSCREEN LIGHTBOX LIGHTBOX FOR MOBILE AND DESKTOP --- */}
-      <AnimatePresence>
-        {activeImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveImage(null)}
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950/95 p-4 backdrop-blur-sm cursor-zoom-out select-none"
-          >
-            {/* Top Close Control Rim */}
-            <div className="absolute top-6 right-6 z-50">
-              <button 
-                onClick={(e) => { e.stopPropagation(); setActiveImage(null); }}
-                className="p-3 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:text-gold transition-all duration-300 shadow-xl"
-              >
-                <X className="h-5 w-5 stroke-[2]" />
-              </button>
-            </div>
-
-            {/* Img Graphic Content Panel Frame */}
-            <motion.div
-              initial={{ scale: 0.95, y: 15 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 15 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-3xl max-h-[80vh] overflow-hidden rounded-2xl border border-white/10 bg-slate-900 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.9)] flex items-center justify-center cursor-default"
-            >
-              <img
-                src={activeImage}
-                alt="Fullscreen News Update Banner"
-                className="max-w-full max-h-[80vh] object-contain"
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

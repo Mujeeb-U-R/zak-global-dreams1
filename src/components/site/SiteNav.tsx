@@ -9,7 +9,7 @@ const NAV = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
   { to: "/portfolio", label: "Visa Routes" },
-  { to: "/news", label: "News" }, // <-- SEAMLESSLY ATTACHED DISCOVERY LINK HERE
+  { to: "/news", label: "News" },
   { to: "/gallery", label: "Gallery" },
   { to: "/faq", label: "FAQ" },
   { to: "/contact", label: "Contact" },
@@ -33,11 +33,8 @@ export function SiteNav() {
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className="fixed top-0 left-0 right-0 z-50 w-full flex flex-col"
     >
-      {/* --- PREMIUM BLACK TOP UTILITY BAR --- */}
       <div className="w-full bg-slate-950 text-slate-400 border-b border-white/5 text-[11px] font-medium tracking-wide">
         <div className="mx-auto max-w-7xl h-9 px-6 flex items-center justify-between">
-          
-          {/* Left Side: Contact Details */}
           <div className="flex items-center gap-6">
             <a 
               href={`mailto:${SITE.email}`} 
@@ -52,7 +49,6 @@ export function SiteNav() {
             </div>
           </div>
 
-          {/* Center: Social Media Matrices */}
           <div className="hidden md:flex items-center gap-4 text-slate-400 border-l border-r border-white/10 px-6 h-full">
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
               <Facebook className="h-3.5 w-3.5" />
@@ -67,33 +63,32 @@ export function SiteNav() {
             </a>
           </div>
 
-          {/* Right Side: Quick Action Routes */}
           <div className="flex items-center gap-4 text-slate-400">
             <Link to="/faq" className="hover:text-white transition-colors">Support</Link>
             <span className="text-white/10">|</span>
             <Link to="/contact" className="hover:text-white transition-colors">Location Map</Link>
           </div>
-
         </div>
       </div>
 
-      {/* --- PRIMARY MAIN NAVIGATION TRACK BAR --- */}
       <div 
         className={`w-full transition-all duration-300 bg-[#0f172b] border-b border-slate-800/60 backdrop-blur-md flex items-center ${
           scrolled ? "h-16" : "h-20"
         }`}
       >
         <div className="mx-auto w-full max-w-7xl px-6 flex items-center justify-between">
+          
+          {/* UPDATED: Branding block wrapped in Link component to navigate to Home */}
           <Link to="/" className="group flex items-center gap-3">
             <img
               src={SITE.logo}
               alt="ZAK Consultants logo"
-              className="h-10 w-10 rounded-full border-2 border-gold/40 object-contain bg-transparent p-1"
+              className="h-10 w-10 rounded-full border-2 border-gold/40 object-contain bg-transparent p-1 transition-transform group-hover:scale-105"
               width={40}
               height={40}
             />
             <span className="flex flex-col leading-tight">
-              <span className="font-display text-base font-semibold tracking-wide text-white">
+              <span className="font-display text-base font-semibold tracking-wide text-white group-hover:text-gold transition-colors">
                 ZAK Consultants
               </span>
               <span className="text-[10px] uppercase tracking-[0.3em] text-slate-400">
@@ -141,7 +136,6 @@ export function SiteNav() {
         </div>
       </div>
 
-      {/* --- RESPONSIVE MOBILE SHEET DRAW PANEL --- */}
       <AnimatePresence>
         {open && (
           <motion.div
