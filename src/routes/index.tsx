@@ -1,9 +1,9 @@
 "use client";
 
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Plane, ShieldCheck, Award, ArrowRight, Star, Quote, Shield, User } from "lucide-react";
+import { Plane, ShieldCheck, Award, ArrowRight, Star, Quote, Shield, X } from "lucide-react";
 import { Layout } from "@/components/site/Layout";
 import { ApplyButton } from "@/components/site/ApplyButton";
 import { SectionHeading } from "@/components/site/SectionHeading";
@@ -36,6 +36,8 @@ const HOMEPAGE_REVIEWS = [
 ];
 
 const HOME_NEWS_IMAGES = [
+  "/news/News8.jpeg",
+  "/news/News9.jpeg",
   "/news/News1.jpeg",
   "/news/News2.jpeg",
   "/news/News3.jpeg",
@@ -43,6 +45,7 @@ const HOME_NEWS_IMAGES = [
   "/news/News5.jpeg",
   "/news/News6.jpeg",
   "/news/News7.jpeg"
+  
 ];
 
 function HomePage() {
@@ -51,7 +54,6 @@ function HomePage() {
       <div className="relative min-h-screen w-full overflow-hidden">
         <Hero />
         <Metrics />
-        {/* --- PLACED PERFECTLY BELOW THE METRICS GRID --- */}
         <CompanyVision />
         <NewsSlideshow />
         <Categories />
@@ -91,78 +93,186 @@ function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-slate-950/40 to-[#030712]" />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-5xl px-6 pt-36 pb-20 text-center flex flex-col items-center">
-        <motion.div 
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md text-[10px] font-medium tracking-[0.35em] uppercase text-amber-400/90 shadow-[0_4px_20px_rgba(0,0,0,0.4)] mb-8"
-        >
-          <Shield className="h-3.5 w-3.5 text-amber-400 fill-amber-400/10 stroke-[1.8]" />
-          <span>{SITE.legal}</span>
-        </motion.div>
+      <div className="relative z-10 mx-auto w-full max-w-5xl px-6 pt-36 pb-28 text-center flex flex-col items-center justify-between min-h-[100svh]">
+        <div className="hidden md:block h-2" />
 
-        <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.05] text-white max-w-4xl">
-          {TITLE_WORDS.map((w, i) => (
-            <motion.span
-              key={i}
-              initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ delay: 0.15 + i * 0.06, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-              className="mr-3 inline-block"
-            >
-              {w === "Global" || w === "Visa" || w === "Solutions" ? (
-                <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent italic font-serif font-normal tracking-normal drop-shadow-sm px-0.5">
-                  {w}
-                </span>
-              ) : w}
-            </motion.span>
-          ))}
-        </h1>
+        <div className="flex flex-col items-center w-full mt-auto mb-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md text-[10px] font-medium tracking-[0.35em] uppercase text-amber-400/90 shadow-[0_4px_20px_rgba(0,0,0,0.4)] mb-8"
+          >
+            <Shield className="h-3.5 w-3.5 text-amber-400 fill-amber-400/10 stroke-[1.8]" />
+            <span>{SITE.legal}</span>
+          </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 max-w-2xl font-sans text-base sm:text-lg text-slate-300 leading-relaxed font-light"
-        >
-          A registered Peshawar-based consultancy delivering meticulous case preparation, legal
-          documentation and personal advisory for clients pursuing life beyond borders.
-        </motion.p>
+          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.05] text-white max-w-4xl">
+            {TITLE_WORDS.map((w, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ delay: 0.15 + i * 0.06, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+                className="mr-3 inline-block"
+              >
+                {w === "Global" || w === "Visa" || w === "Solutions" ? (
+                  <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent italic font-serif font-normal tracking-normal drop-shadow-sm px-0.5">
+                    {w}
+                  </span>
+                ) : w}
+              </motion.span>
+            ))}
+          </h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-5 w-full sm:w-auto"
-        >
-          <ApplyButton label="Get Started" />
-          
-          <div className="flex items-center gap-6 sm:pl-2">
-            <a
-              href="/portfolio"
-              className="group inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-slate-300 hover:text-white transition-colors duration-300"
-            >
-              Explore Routes
-              <ArrowRight className="h-4 w-4 text-amber-400 transition-transform duration-300 transform group-hover:translate-x-1" />
-            </a>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-8 max-w-2xl font-sans text-base sm:text-lg text-slate-300 leading-relaxed font-light"
+          >
+            A registered Peshawar-based consultancy delivering meticulous case preparation, legal
+            documentation and personal advisory for clients pursuing life beyond borders.
+          </motion.p>
 
-            <span className="h-4 w-px bg-white/10 hidden sm:inline" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 w-full sm:w-auto"
+          >
+            <ApplyButton label="Get Started" />
+            
+            <div className="flex items-center justify-center gap-6 sm:pl-2 w-full sm:w-auto">
+              <a
+                href="/portfolio"
+                className="group inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-slate-300 hover:text-white transition-colors duration-300 whitespace-nowrap"
+              >
+                Explore Routes
+                <ArrowRight className="h-4 w-4 text-amber-400 transition-transform duration-300 transform group-hover:translate-x-1" />
+              </a>
 
-            <a
-              href="/faq"
-              className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-400/80 hover:text-amber-400 hover:underline underline-offset-4 transition-all duration-300"
-            >
-              Read FAQs
-            </a>
+              <span className="h-4 w-px bg-white/10 hidden sm:inline" />
+
+              <a
+                href="/faq"
+                className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-400/80 hover:text-amber-400 hover:underline underline-offset-4 transition-all duration-300 whitespace-nowrap"
+              >
+                Read FAQs
+              </a>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Dynamic Spacing Configuration for Desktop and Phone Viewports */}
+        <div className="w-full mt-16 sm:mt-20 flex flex-col items-center gap-3 pointer-events-none select-none">
+          <span className="text-[9px] font-mono tracking-[0.4em] uppercase text-slate-500">Scroll</span>
+          <div className="h-12 w-px bg-gradient-to-b from-white/30 via-white/10 to-transparent" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+{/* --- INTERACTIVE PAPUP SLIDESHOW MODULE --- */}
+function NewsSlideshow() {
+  const [activeImage, setActiveImage] = useState<string | null>(null);
+
+  // Freeze device background document layers when lightbox mounts
+  useEffect(() => {
+    if (activeImage) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => { document.body.style.overflow = "unset"; };
+  }, [activeImage]);
+
+  return (
+    <section className="relative py-16 bg-transparent overflow-hidden">
+      <div className="mx-auto max-w-7xl px-6 relative z-10">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-10">
+          <div>
+            <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-stone-900">
+              Latest <span className="text-gold-gradient italic font-normal">Updates</span> and News
+            </h2>
           </div>
-        </motion.div>
+          
+          <Link
+            to="/news"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-slate-950 shadow-md transition-transform hover:scale-[1.03] active:scale-[0.98]"
+          >
+            Explore All News
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <div className="relative w-full overflow-hidden py-4 select-none">
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#fdfbf7] via-[#fdfbf7]/40 to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#fdfbf7] via-[#fdfbf7]/40 to-transparent z-10 pointer-events-none" />
+
+          {/* 🛠️ ANIMATION CHANGER: Injected activeImage parameter toggle to pause marquee animation runtime gracefully */}
+          <div 
+            className={`flex w-max gap-6 animate-marquee ${
+              activeImage ? "animate-play-paused" : "animate-play-running"
+            }`}
+          >
+            {[...HOME_NEWS_IMAGES, ...HOME_NEWS_IMAGES].map((imgSrc, index) => (
+              <div
+                key={index}
+                onClick={() => setActiveImage(imgSrc)}
+                className="w-[280px] sm:w-[360px] h-[240px] sm:h-[300px] bg-white rounded-2xl border border-stone-200/80 p-3 shadow-[0_10px_30px_rgba(27,24,17,0.03)] flex items-center justify-center overflow-hidden cursor-zoom-in active:scale-[0.98] transition-transform duration-200"
+              >
+                <img
+                  src={imgSrc}
+                  alt={`ZAK News Flash Asset ${index + 1}`}
+                  className="max-h-full max-w-full object-contain rounded-lg transition-transform duration-300 hover:scale-[1.02]"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none select-none z-10 opacity-30">
-        <span className="text-[9px] font-mono tracking-[0.4em] uppercase text-slate-400">Scroll</span>
-        <div className="h-10 w-px bg-gradient-to-b from-white via-white/50 to-transparent" />
-      </div>
+      {/* --- PREMIUM FULLSCREEN LIGHTBOX LIGHTBOX FOR MOBILE AND DESKTOP --- */}
+      <AnimatePresence>
+        {activeImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveImage(null)}
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950/95 p-4 backdrop-blur-sm cursor-zoom-out select-none"
+          >
+            {/* Top Close Control Rim */}
+            <div className="absolute top-6 right-6 z-50">
+              <button 
+                onClick={(e) => { e.stopPropagation(); setActiveImage(null); }}
+                className="p-3 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:text-gold transition-all duration-300 shadow-xl"
+              >
+                <X className="h-5 w-5 stroke-[2]" />
+              </button>
+            </div>
+
+            {/* Img Graphic Content Panel Frame */}
+            <motion.div
+              initial={{ scale: 0.95, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 15 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-3xl max-h-[80vh] overflow-hidden rounded-2xl border border-white/10 bg-slate-900 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.9)] flex items-center justify-center cursor-default"
+            >
+              <img
+                src={activeImage}
+                alt="Fullscreen News Update Banner"
+                className="max-w-full max-h-[80vh] object-contain"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
@@ -243,13 +353,12 @@ function CompanyVision() {
           <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-gold max-w-3xl leading-tight">
             Architecting flawless pathways for <span className="text-gold-gradient italic font-normal">global mobility</span>.
           </h2>
-          <p className="mt-6 max-w-2xl font-sans text-base sm:text-lg text-slate-400 leading-relaxed font-light">
+          <p className="mt-6 max-w-2xl font-sans text-base sm:text-lg text-slate-800 leading-relaxed font-dark">
             At ZAK Consultants, our vision is to simplify international exploration through peerless compliance modeling and strategic asset assembly. We map legal ecosystems deliberately, ensuring your visa frameworks process safely through every global border threshold.
           </p>
           <div className="mt-10">
             <Link
               to="/about"
-              
               className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] text-slate-950 shadow-md transition-transform hover:scale-[1.03] active:scale-[0.98]"
             >
               Learn more about us
@@ -257,53 +366,6 @@ function CompanyVision() {
             </Link>
           </div>
         </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function NewsSlideshow() {
-  return (
-    <section className="relative py-16 bg-transparent overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 relative z-10">
-        
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-10">
-          <div>
-            <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-stone-900">
-              Latest <span className="text-gold-gradient italic font-normal">Updates</span> and News
-            </h2>
-          </div>
-          
-          <Link
-            to="/news"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-slate-950 shadow-md transition-transform hover:scale-[1.03] active:scale-[0.98]"
-          >
-            Explore All News
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-
-        <div className="relative w-full overflow-hidden py-4 select-none">
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#fdfbf7] via-[#fdfbf7]/40 to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#fdfbf7] via-[#fdfbf7]/40 to-transparent z-10 pointer-events-none" />
-
-          <div className="flex w-max gap-6 animate-marquee">
-            {[...HOME_NEWS_IMAGES, ...HOME_NEWS_IMAGES].map((imgSrc, index) => (
-              <div
-                key={index}
-                className="w-[280px] sm:w-[360px] h-[240px] sm:h-[300px] bg-white rounded-2xl border border-stone-200/80 p-3 shadow-[0_10px_30px_rgba(27,24,17,0.03)] flex items-center justify-center overflow-hidden"
-              >
-                <img
-                  src={imgSrc}
-                  alt={`ZAK News Flash Asset ${index + 1}`}
-                  className="max-h-full max-w-full object-contain rounded-lg transition-transform duration-300 hover:scale-[1.02]"
-                  loading="lazy"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
       </div>
     </section>
   );
@@ -435,7 +497,6 @@ function CEOQuote() {
         >
           <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-amber-500/[0.02] rounded-full filter blur-2xl pointer-events-none" />
           
-          {/* --- OVERLAPPING HALF-OUT/HALF-IN BADGE POSITIONED ON THE CORNER EDGE --- */}
           <div className="absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none select-none perspective-1000">
             <motion.div 
               transition={{ 

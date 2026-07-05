@@ -79,7 +79,7 @@ function GalleryPage() {
       <section className="relative pb-16">
         <div className="mx-auto max-w-7xl px-6 pt-12">
           <SectionHeading
-            eyebrow="Success Gallery"
+            
             title={<>Outcomes that <span className="text-gold-gradient italic">travel</span> with you</>}
             intro="A curated look at approved files and the journeys they unlocked. Personal data is obscured for privacy."
           />
