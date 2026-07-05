@@ -18,16 +18,16 @@ export const Route = createFileRoute("/gallery")({
 });
 
 const GRID = [
-  { src: "/opening_ceremony/ceremony1.jpeg", label: "Opening Ceremony — Moment 01" },
-  { src: "/opening_ceremony/ceremony2.jpeg", label: "Opening Ceremony — Moment 02" },
-  { src: "/opening_ceremony/ceremony3.jpeg", label: "Opening Ceremony — Moment 03" },
-  { src: "/opening_ceremony/ceremony4.jpeg", label: "Opening Ceremony — Moment 04" },
-  { src: "/opening_ceremony/ceremony5.jpeg", label: "Opening Ceremony — Moment 05" },
-  { src: "/opening_ceremony/ceremony6.jpeg", label: "Opening Ceremony — Moment 06" },
-  { src: "/opening_ceremony/ceremony7.jpeg", label: "Opening Ceremony — Moment 07" },
-  { src: "/opening_ceremony/ceremony8.jpeg", label: "Opening Ceremony — Moment 08" },
-  { src: "/opening_ceremony/ceremony9.jpeg", label: "Opening Ceremony — Moment 09" },
-  { src: "/opening_ceremony/ceremony10.jpeg", label: "Opening Ceremony — Moment 10" },
+  { src: "/opening_ceremony/ceremony1.jpeg", label: "Moment 01" },
+  { src: "/opening_ceremony/ceremony2.jpeg", label: "Moment 02" },
+  { src: "/opening_ceremony/ceremony3.jpeg", label: "Moment 03" },
+  { src: "/opening_ceremony/ceremony4.jpeg", label: "Moment 04" },
+  { src: "/opening_ceremony/ceremony5.jpeg", label: "Moment 05" },
+  { src: "/opening_ceremony/ceremony6.jpeg", label: "Moment 06" },
+  { src: "/opening_ceremony/ceremony7.jpeg", label: "Moment 07" },
+  { src: "/opening_ceremony/ceremony8.jpeg", label: "Moment 08" },
+  { src: "/opening_ceremony/ceremony9.jpeg", label: "Moment 09" },
+  { src: "/opening_ceremony/ceremony10.jpeg", label: "Moment 10" },
 ];
 
 const REVIEWS = [
@@ -79,7 +79,6 @@ function GalleryPage() {
       <section className="relative pb-16">
         <div className="mx-auto max-w-7xl px-6 pt-12">
           <SectionHeading
-            
             title={<>Outcomes that <span className="text-gold-gradient italic">travel</span> with you</>}
             intro="A curated look at approved files and the journeys they unlocked. Personal data is obscured for privacy."
           />
@@ -89,6 +88,20 @@ function GalleryPage() {
       {/* --- EXECUTIVE EDITORIAL MASONRY GRID --- */}
       <section className="pb-24">
         <div className="mx-auto max-w-7xl px-6">
+          
+          {/* --- NEW: OPENING CEREMONY HEADING --- */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            className="mb-10 flex items-center gap-6"
+          >
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-stone-900 whitespace-nowrap">
+              Opening <span className="text-gold-gradient italic font-normal">Ceremony</span>
+            </h2>
+            <div className="h-px w-full bg-gradient-to-r from-stone-200 to-transparent" />
+          </motion.div>
+
           <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 space-y-6">
             {GRID.map((it, i) => (
               <motion.figure
@@ -101,18 +114,15 @@ function GalleryPage() {
                 className="break-inside-avoid group relative overflow-hidden rounded-2xl border border-stone-200 bg-[#fdfbf7] p-2.5 cursor-zoom-in shadow-xl hover:shadow-2xl hover:border-amber-500/40 transition-all duration-500"
               >
                 <div className="relative overflow-hidden rounded-xl bg-stone-950">
-                  {/* Subtle warm tint and slight desaturation that transitions smoothly on hover */}
                   <img 
                     src={it.src} 
                     alt={it.label} 
                     className="w-full h-auto object-cover grayscale-[15%] sepia-[10%] brightness-[96%] transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:grayscale-0 group-hover:sepia-0 group-hover:brightness-100" 
                   />
                   
-                  {/* Internal ambient dark frame rim */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-60 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none" />
                 </div>
                 
-                {/* Premium Corporate metadata label line */}
                 <div className="mt-3 px-2 pb-1 flex items-center justify-between">
                   <figcaption className="text-[10px] font-mono uppercase tracking-[0.18em] text-stone-500 group-hover:text-amber-700 transition-colors duration-300 font-semibold">
                     {it.label}
@@ -135,7 +145,7 @@ function GalleryPage() {
             onClick={() => setActiveIndex(null)}
             className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950/95 p-4 backdrop-blur-sm select-none"
           >
-            <div className="absolute top-6 right-6 z-50">
+            <div className="absolute top-5 right-5 sm:top-6 sm:right-6 z-50">
               <button 
                 onClick={(e) => { e.stopPropagation(); setActiveIndex(null); }}
                 className="p-3 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:text-gold transition-all duration-300 shadow-xl"
@@ -144,19 +154,19 @@ function GalleryPage() {
               </button>
             </div>
 
-            <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex items-center justify-between z-40 pointer-events-none">
+            <div className="absolute inset-x-2 sm:inset-x-4 top-1/2 -translate-y-1/2 flex items-center justify-between z-40 pointer-events-none">
               <button
                 onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-                className="p-4 rounded-full bg-slate-900/60 border border-white/10 text-white hover:bg-slate-900 hover:text-gold transition-all duration-300 pointer-events-auto"
+                className="p-3 sm:p-4 rounded-full bg-slate-900/60 border border-white/10 text-white hover:bg-slate-900 hover:text-gold transition-all duration-300 pointer-events-auto"
               >
-                <ChevronLeft className="h-6 w-6 stroke-[2]" />
+                <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 stroke-[2]" />
               </button>
 
               <button
                 onClick={(e) => { e.stopPropagation(); handleNext(); }}
-                className="p-4 rounded-full bg-slate-900/60 border border-white/10 text-white hover:bg-slate-900 hover:text-gold transition-all duration-300 pointer-events-auto"
+                className="p-3 sm:p-4 rounded-full bg-slate-900/60 border border-white/10 text-white hover:bg-slate-900 hover:text-gold transition-all duration-300 pointer-events-auto"
               >
-                <ChevronRight className="h-6 w-6 stroke-[2]" />
+                <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 stroke-[2]" />
               </button>
             </div>
 
@@ -167,19 +177,19 @@ function GalleryPage() {
               exit={{ scale: 0.97, opacity: 0.8 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-5xl max-h-[85vh] overflow-hidden rounded-2xl border border-white/10 bg-slate-900 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.9)] flex items-center justify-center"
+              className="relative flex items-center justify-center cursor-default w-full px-16 sm:px-24"
             >
               <img
                 src={GRID[activeIndex].src}
                 alt={GRID[activeIndex].label}
-                className="max-w-full max-h-[85vh] object-contain"
+                className="max-w-full max-h-[75vh] sm:max-h-[80vh] object-contain rounded-lg shadow-[0_25px_70px_-15px_rgba(0,0,0,0.9)]"
               />
             </motion.div>
 
             <motion.div 
               initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              className="mt-6 flex items-center gap-4 text-xs font-mono uppercase tracking-[0.2em] bg-slate-900/80 border border-white/5 backdrop-blur-md px-6 py-2.5 rounded-full shadow-lg"
+              className="mt-5 sm:mt-6 flex items-center gap-4 text-xs font-mono uppercase tracking-[0.2em] bg-slate-900/80 border border-white/5 backdrop-blur-md px-6 py-2.5 rounded-full shadow-lg"
             >
               <span className="text-amber-500 font-bold">{activeIndex + 1} / {GRID.length}</span>
               <span className="w-px h-3 bg-white/20" />
