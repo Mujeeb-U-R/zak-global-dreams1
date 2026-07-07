@@ -178,12 +178,13 @@ function Hero() {
 /* --- INTERACTIVE NEWS SLIDESHOW MODULE --- */
 function NewsSlideshow() {
   const [index, setIndex] = useState(0);
+  const [activeImage, setActiveImage] = useState<string | null>(null);
 
-  // Auto-play: Change slide every 3 seconds
+  // Auto-play: Move one picture ahead every 4 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % HOME_NEWS_IMAGES.length);
-    }, 3000);
+    }, 4000);
     return () => clearInterval(timer);
   }, []);
 
@@ -192,67 +193,68 @@ function NewsSlideshow() {
 
   return (
     <section className="relative py-16 bg-transparent overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 relative z-10">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-10">
-          <div>
-            <h2 className="mt-2 font-display text-3xl sm:text-4xl font-bold text-stone-900">
-              Latest <span className="text-gold-gradient italic font-normal">Updates</span> and News
-            </h2>
+      <div className="mx-auto max-w-7xl px-6">
+        <h2 className="mb-12 text-center font-display text-4xl font-bold text-stone-900">
+          Latest <span className="text-gold-gradient italic font-normal">Updates</span> and News
+        </h2>
+
+        <div className="relative w-full max-w-5xl mx-auto flex items-center justify-center">
+          {/* Left Arrow */}
+          <button onClick={prev} className="absolute left-0 z-20 p-2 bg-white rounded-full shadow-lg hover:bg-amber-50 transition-colors">
+            <ChevronLeft className="w-6 h-6 text-amber-700" />
+          </button>
+
+          {/* Slideshow Track */}
+          <div className="flex w-full gap-6 overflow-hidden p-4">
+            {/* Logic: We display images based on index. On mobile 1, on desktop 3 */}
+            {[0, 1, 2].map((offset) => {
+              const displayIndex = (index + offset) % HOME_NEWS_IMAGES.length;
+              return (
+                <motion.div
+                  key={displayIndex}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  onClick={() => setActiveImage(HOME_NEWS_IMAGES[displayIndex])}
+                  className={`cursor-zoom-in bg-white p-3 rounded-2xl border border-stone-200 shadow-lg ${
+                    offset > 0 ? "hidden md:block" : "block"
+                  } w-full md:w-1/3`}
+                >
+                  <img src={HOME_NEWS_IMAGES[displayIndex]} className="w-full h-auto rounded-lg" />
+                </motion.div>
+              );
+            })}
           </div>
-          <Link
-            to="/news"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-slate-950 shadow-md transition-transform hover:scale-[1.03] active:scale-[0.98]"
-          >
-            Explore All News
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+
+          {/* Right Arrow */}
+          <button onClick={next} className="absolute right-0 z-20 p-2 bg-white rounded-full shadow-lg hover:bg-amber-50 transition-colors">
+            <ChevronRight className="w-6 h-6 text-amber-700" />
+          </button>
         </div>
 
-        {/* Slideshow Container */}
-        <div className="relative w-full max-w-sm mx-auto">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-stone-200 shadow-xl bg-white p-1.5">
-    <AnimatePresence mode="wait">
-      <motion.img
-        key={index}
-        src={HOME_NEWS_IMAGES[index]}
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -20 }}
-        transition={{ duration: 0.5 }}
-        className="w-full h-full object-contain rounded-lg"
-      />
-    </AnimatePresence>
-  </div>
-
-          {/* Navigation Arrows */}
-          <button 
-            onClick={prev} 
-            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-white/90 rounded-full shadow-lg hover:bg-white transition-colors z-20"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="w-5 h-5 text-stone-800" />
-          </button>
-          <button 
-            onClick={next} 
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-white/90 rounded-full shadow-lg hover:bg-white transition-colors z-20"
-            aria-label="Next slide"
-          >
-            <ChevronRight className="w-5 h-5 text-stone-800" />
-          </button>
-
-          {/* Pagination Dots */}
-          <div className="flex justify-center gap-2 mt-6">
-            {HOME_NEWS_IMAGES.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setIndex(i)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${i === index ? "bg-amber-600 w-6" : "bg-stone-300 hover:bg-stone-400"}`}
-                aria-label={`Go to slide ${i + 1}`}
-              />
-            ))}
-          </div>
+        {/* Pagination Dots */}
+        <div className="flex justify-center gap-3 mt-8">
+          {HOME_NEWS_IMAGES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              className={`h-3 w-3 rounded-full transition-all ${i === index ? "bg-amber-600 scale-125" : "bg-stone-300"}`}
+            />
+          ))}
         </div>
       </div>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {activeImage && (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            onClick={() => setActiveImage(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 cursor-zoom-out"
+          >
+            <img src={activeImage} className="max-w-full max-h-[90vh] rounded-lg" />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
@@ -477,22 +479,6 @@ function CEOQuote() {
         >
           <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-amber-500/[0.02] rounded-full filter blur-2xl pointer-events-none" />
           
-          <div className="absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none select-none perspective-1000">
-            <motion.div 
-              transition={{ 
-                rotateY: { duration: 25, ease: "linear", repeat: Infinity }
-              }}
-              className="w-36 h-36 flex items-center justify-center transform-gpu preserve-3d"
-            >
-              <div className="relative w-full h-full flex items-center justify-center bg-transparent p-2">
-                <img 
-                  src={SITE.logo}
-                  alt="ZAK Consultants Large Transparent Logo"
-                  className="max-h-full max-w-full object-contain filter drop-shadow-[0_10px_15px_rgba(0,0,0,0.25)]"
-                />
-              </div>
-            </motion.div>
-          </div>
 
           <div className="shrink-0 w-2 md:w-4 h-px" />
 
@@ -503,12 +489,12 @@ function CEOQuote() {
             
             <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-center md:justify-start gap-2 text-sm border-t border-stone-200/60 pt-4">
               <span className="text-amber-700 font-display font-bold text-base tracking-wide">
-                Ziyad Khan
+                ZAK Consultants
               </span>
-              <span className="text-stone-400 hidden sm:inline">•</span>
+              {/* <span className="text-stone-400 hidden sm:inline">•</span>
               <span className="text-xs font-mono uppercase tracking-[0.15em] text-stone-500 font-medium">
                 Chief Executive Officer
-              </span>
+              </span> */}
             </div>
           </div>
 
