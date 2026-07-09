@@ -27,11 +27,11 @@ export function ApplyModal({ isOpen, onClose, preset }: Props) {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
-    phone: "",
-    destination: "",
-    category: "Visit Visa" as (typeof CATEGORIES)[number],
-    employment: "Employed" as (typeof EMPLOYMENT)[number],
-    bankStatement: "Yes" as "Yes" | "No",
+    Phone: "",
+    Destination: "",
+    Category: "Visit Visa" as (typeof CATEGORIES)[number],
+    Employment: "Employed" as (typeof EMPLOYMENT)[number],
+    BankStatement: "Yes" as "Yes" | "No",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formStatus, setFormStatus] = useState<"IDLE" | "SUBMITTING" | "SUCCESS" | "ERROR">("IDLE");
@@ -90,7 +90,7 @@ export function ApplyModal({ isOpen, onClose, preset }: Props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fullName: computedFullName,
+          FullName: computedFullName,
           ...rest
         }),
       });

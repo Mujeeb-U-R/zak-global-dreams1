@@ -45,10 +45,10 @@ function ContactPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fullName: computedFullName,
-          phone: phone,
-          visaCategory: "General Inquiry",
-          message: msg,
+          FullName: computedFullName,
+          Phone: phone,
+          VisaCategory: "General Inquiry",
+          Message: msg,
         }),
       });
 
