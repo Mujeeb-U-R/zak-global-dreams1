@@ -36,7 +36,7 @@ export function SiteFooter() {
             <div className="mt-6 flex items-center gap-1 text-slate-400 -ml-2">
               <motion.a 
                 whileTap={{ scale: 0.90 }} 
-                href="https://facebook.com" 
+                href="https://www.facebook.com/share/1F2vLhEiA7/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="p-2 rounded-lg active:bg-white/5 active:text-gold text-slate-400 transition-colors"
@@ -45,7 +45,7 @@ export function SiteFooter() {
               </motion.a>
               <motion.a 
                 whileTap={{ scale: 0.90 }} 
-                href="https://instagram.com" 
+                href="https://www.instagram.com/zakconsultants21?igsh=MXY0YjVoZDZrMjV5NA==" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="p-2 rounded-lg active:bg-white/5 active:text-gold text-slate-400 transition-colors"
@@ -54,7 +54,7 @@ export function SiteFooter() {
               </motion.a>
               <motion.a 
                 whileTap={{ scale: 0.90 }} 
-                href="https://tiktok.com" 
+                href="https://www.tiktok.com/@zak.consultants?_r=1&_t=ZS-97t8EG2Atv7" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="p-2 rounded-lg active:bg-white/5 active:text-gold text-slate-400 transition-colors"

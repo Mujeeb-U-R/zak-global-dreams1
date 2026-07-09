@@ -50,13 +50,13 @@ export function SiteNav() {
           </div>
 
           <div className="hidden md:flex items-center gap-4 text-slate-400 border-l border-r border-white/10 px-6 h-full">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            <a href="https://www.facebook.com/share/1F2vLhEiA7/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
               <Facebook className="h-3.5 w-3.5" />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            <a href="https://www.instagram.com/zakconsultants21?igsh=MXY0YjVoZDZrMjV5NA==" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
               <Instagram className="h-3.5 w-3.5" />
             </a>
-            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            <a href="https://www.tiktok.com/@zak.consultants?_r=1&_t=ZS-97t8EG2Atv7" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
               <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
                 <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.01.08 1.53.63 3.02 1.6 4.17 1.12 1.32 2.75 2.15 4.43 2.3v3.83c-1.7-.06-3.38-.63-4.74-1.68-.26-.2-.5-.42-.73-.65v6.43c.02 3.8-2.5 7.42-6.25 8.16-3.88.87-8.12-1.2-9.45-4.96C-.2 13.56 1.42 8.91 5.4 7.74c1.4-.43 2.9-.38 4.25.18v3.91c-1.12-.54-2.46-.53-3.55.07-1.37.72-2.13 2.27-1.89 3.82.3 1.83 2.05 3.16 3.89 2.87 1.48-.2 2.63-1.42 2.76-2.92.01-1.83.01-11.66.01-15.61h1.65z"/>
               </svg>
