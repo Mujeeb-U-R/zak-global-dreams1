@@ -182,16 +182,16 @@ function OurTeam() {
     <section className="relative py-28 bg-transparent">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-16 text-center">
-          <span className="text-xs font-mono uppercase tracking-[0.4em] text-gold">Leadership</span>
-          <h2 className="text-4xl md:text-5xl font-display text-slate-900 mt-2">The Advisory Council</h2>
-          <p className="text-slate-600 mt-3 text-sm max-w-md mx-auto font-light">Senior partners driving legal documentation strategy and cross-border alignment matrixes.</p>
+          
+          <h2 className="text-4xl md:text-5xl font-display text-slate-900 mt-2">Team Behind ZAK Consultants</h2>
+          {/* <p className="text-slate-600 mt-3 text-sm max-w-md mx-auto font-light">Senior partners driving legal documentation strategy and cross-border alignment matrixes.</p> */}
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
           {[
-            { name: "Mujeeb Ur Rehman", role: "Managing Director", strategy: "Sovereign Pathways & Corporate Strategy" },
-            { name: "Muzamil Shiraz", role: "Partner & Head of Risk Management", strategy: "Legal Evidence Assembly & Profiling Architecture" },
-            { name: "Abdul Rafhay Hussain", role: "Chief Operational Advisory", strategy: "Global Mobility Solutions & Verification Frameworks" }
+            { name: "Ziyad Khan", strategy: "Sovereign Pathways & Corporate Strategy" },
+            { name: "Muhammad Hamza", strategy: "Legal Evidence Assembly & Profiling Architecture" },
+            { name: "Mujeeb Ur Rehman", strategy: "Global Mobility Solutions & Verification Frameworks" }
           ].map((member, i) => (
             <motion.div
               key={i}
@@ -209,9 +209,7 @@ function OurTeam() {
                 <h3 className="mt-6 font-display text-2xl text-slate-900 group-hover:text-white transition-colors duration-300">
                   {member.name}
                 </h3>
-                <p className="text-xs font-mono uppercase tracking-widest text-[#b88939] group-hover:text-white/80 transition-colors duration-300 mt-1">
-                  {member.role}
-                </p>
+              
               </div>
 
               <p className="text-xs text-slate-600 border-t border-slate-200/60 pt-4 mt-6 italic font-light group-hover:text-white/90 group-hover:border-white/20 transition-all duration-500">
