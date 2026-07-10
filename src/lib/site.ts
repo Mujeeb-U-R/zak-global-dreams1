@@ -1,6 +1,7 @@
 export const SITE = {
   name: "ZAK Consultants (Pvt.) Ltd.",
   short: "ZAK Consultants",
+  url: "https://zakvisaconsultants.com",
   // Public path to the site logo. Using the uploaded transparent PNG.
   logo: "/zak_logo-removebg-preview.png",
   tagline: "Your Trusted Partner for Global Visa Solutions",
