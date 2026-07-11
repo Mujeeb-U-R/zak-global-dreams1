@@ -21,6 +21,9 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "ZAK Consultants — Global Visa Solutions" },
       { property: "og:description", content: SITE.tagline },
     ],
+    links: [
+      { rel: "icon", href: SITE.logo } 
+    ],
   }),
   component: HomePage,
 });
