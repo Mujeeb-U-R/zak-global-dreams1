@@ -10,6 +10,7 @@ import { SectionHeading } from "@/components/site/SectionHeading";
 import { SITE, VISA_CATALOG } from "@/lib/site";
 import heroPoster from "@/assets/hero-poster.jpg";
 import ctaBg from "@/assets/cta-bg.jpg.asset.json";
+import { ALL_NEWS_IMAGES } from "@/lib/newsData";
 
 
 export const Route = createFileRoute("/")({
@@ -39,18 +40,6 @@ const HOMEPAGE_REVIEWS = [
   { name: "Maryam N.", route: "Schengen Tourist Visa", text: "Honest advice on bank statement timelines. They won't file unless they know your matrix matches the required embassy thresholds perfectly." },
 ];
 
-const HOME_NEWS_IMAGES = [
-  "/news/News8.jpeg",
-  "/news/News9.jpeg",
-  "/news/News1.jpeg",
-  "/news/News2.jpeg",
-  "/news/News3.jpeg",
-  "/news/News4.jpeg",
-  "/news/News5.jpeg",
-  "/news/News6.jpeg",
-  "/news/News7.jpeg"
-  
-];
 
 function HomePage() {
   return (
@@ -187,13 +176,13 @@ function NewsSlideshow() {
   // Auto-play: Move one picture ahead every 4 seconds
   useEffect(() => {
     const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % HOME_NEWS_IMAGES.length);
+      setIndex((prev) => (prev + 1) % ALL_NEWS_IMAGES.length);
     }, 4000);
     return () => clearInterval(timer);
   }, []);
 
-  const next = () => setIndex((i) => (i + 1) % HOME_NEWS_IMAGES.length);
-  const prev = () => setIndex((i) => (i - 1 + HOME_NEWS_IMAGES.length) % HOME_NEWS_IMAGES.length);
+  const next = () => setIndex((i) => (i + 1) % ALL_NEWS_IMAGES.length);
+  const prev = () => setIndex((i) => (i - 1 + ALL_NEWS_IMAGES.length) % ALL_NEWS_IMAGES.length);
 
   return (
     <section className="relative py-16 bg-transparent overflow-hidden">
@@ -212,18 +201,18 @@ function NewsSlideshow() {
           <div className="flex w-full gap-6 overflow-hidden p-4">
             {/* Logic: We display images based on index. On mobile 1, on desktop 3 */}
             {[0, 1, 2].map((offset) => {
-              const displayIndex = (index + offset) % HOME_NEWS_IMAGES.length;
+              const displayIndex = (index + offset) % ALL_NEWS_IMAGES.length;
               return (
                 <motion.div
                   key={displayIndex}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  onClick={() => setActiveImage(HOME_NEWS_IMAGES[displayIndex])}
+                  onClick={() => setActiveImage(ALL_NEWS_IMAGES[displayIndex])}
                   className={`cursor-zoom-in bg-white p-3 rounded-2xl border border-stone-200 shadow-lg ${
                     offset > 0 ? "hidden md:block" : "block"
                   } w-full md:w-1/3`}
                 >
-                  <img src={HOME_NEWS_IMAGES[displayIndex]} className="w-full h-auto rounded-lg" />
+                  <img src={ALL_NEWS_IMAGES[displayIndex]} className="w-full h-auto rounded-lg" alt="News Preview" />
                 </motion.div>
               );
             })}
@@ -237,7 +226,7 @@ function NewsSlideshow() {
 
         {/* Pagination Dots */}
         <div className="flex justify-center gap-3 mt-8">
-          {HOME_NEWS_IMAGES.map((_, i) => (
+          {ALL_NEWS_IMAGES.map((_, i) => (
             <button
               key={i}
               onClick={() => setIndex(i)}
@@ -255,7 +244,7 @@ function NewsSlideshow() {
             onClick={() => setActiveImage(null)}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 cursor-zoom-out"
           >
-            <img src={activeImage} className="max-w-full max-h-[90vh] rounded-lg" />
+            <img src={activeImage} className="max-w-full max-h-[90vh] rounded-lg" alt="Fullscreen Preview" />
           </motion.div>
         )}
       </AnimatePresence>

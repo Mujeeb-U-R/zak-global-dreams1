@@ -4,6 +4,13 @@ import { useState, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Layout } from "@/components/site/Layout";
 import { SectionHeading } from "@/components/site/SectionHeading";
+import { 
+  SPECIAL_OFFERS_IMAGES, 
+  GROUP_TOURS_IMAGES, 
+  WORK_PERMIT_IMAGES,
+  STUDY_VISA_IMAGES, 
+  ALL_NEWS_IMAGES 
+} from "@/lib/newsData";
 
 export const Route = createFileRoute("/news")({
   head: () => ({
@@ -15,21 +22,7 @@ export const Route = createFileRoute("/news")({
   component: NewsPage,
 });
 
-// --- PURE CASE-SENSITIVE PATHS MATCHING YOUR FILENAMES ---
-const NEWS_IMAGES = [
-  "/news/News8.jpeg",
-  "/news/News9.jpeg",
-  "/news/News1.jpeg",
-  "/news/News2.jpeg",
-  "/news/News3.jpeg",
-  "/news/News4.jpeg",
-  "/news/News5.jpeg",
-  "/news/News6.jpeg",
-  "/news/News7.jpeg"
-];
-
 function NewsPage() {
-  // --- STATE MANAGEMENT FOR LIGHTBOX SLIDER ---
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   // Keyboard navigation routing
@@ -58,15 +51,54 @@ function NewsPage() {
 
   const handleNext = () => {
     if (activeIndex !== null) {
-      setActiveIndex((activeIndex + 1) % NEWS_IMAGES.length);
+      setActiveIndex((activeIndex + 1) % ALL_NEWS_IMAGES.length);
     }
   };
 
   const handlePrev = () => {
     if (activeIndex !== null) {
-      setActiveIndex((activeIndex - 1 + NEWS_IMAGES.length) % NEWS_IMAGES.length);
+      setActiveIndex((activeIndex - 1 + ALL_NEWS_IMAGES.length) % ALL_NEWS_IMAGES.length);
     }
   };
+
+  // Helper function to render a grid section
+  const renderSection = (title: string, eyebrow: string, images: string[], startIndex: number) => (
+    <div className="mb-24 last:mb-12">
+      <div className="mb-10 border-b border-stone-200/80 pb-4">
+        <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-amber-600 block mb-1">{eyebrow}</span>
+        <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-900">
+          {title}
+        </h2>
+      </div>
+
+      <div className="grid gap-8 md:grid-cols-2">
+        {images.map((imgSrc, idx) => {
+          const globalIndex = startIndex + idx;
+          return (
+            <motion.div
+              key={globalIndex}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ delay: idx * 0.05, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              onClick={() => setActiveIndex(globalIndex)}
+              className="group relative overflow-hidden rounded-2xl border border-stone-200/80 bg-white p-4 shadow-[0_15px_40px_rgba(27,24,17,0.05)] transition-all duration-300 hover:shadow-[0_25px_50px_rgba(27,24,17,0.1)] hover:border-amber-500/30 cursor-zoom-in active:scale-[0.98]"
+            >
+              <div className="relative w-full min-h-[400px] max-h-[600px] flex items-center justify-center bg-stone-50 rounded-xl overflow-hidden p-2">
+                <img
+                  src={imgSrc}
+                  alt={`${title} Asset ${idx + 1}`}
+                  className="max-h-[580px] w-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-stone-950/0 transition-colors duration-300 group-hover:bg-stone-950/[0.02] pointer-events-none" />
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
 
   return (
     <Layout>
@@ -74,41 +106,28 @@ function NewsPage() {
         <div className="mx-auto max-w-7xl px-6 relative">
           <SectionHeading
             eyebrow="Media Center"
-            title={<>Latest <span className="text-gold-gradient italic">News</span> and Updates</>}
-            intro="Explore our recent visual logs and operational photo releases below."
+            title={<>News, <span className="text-gold-gradient italic">Offers</span> & Updates</>}
+            intro="Explore our categorized visual logs, promotional packages, and operational updates below."
           />
         </div>
       </section>
 
       <section className="pb-28">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-8 md:grid-cols-2">
-            {NEWS_IMAGES.map((imgSrc, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ delay: index * 0.05, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                onClick={() => setActiveIndex(index)}
-                className="group relative overflow-hidden rounded-2xl border border-stone-200/80 bg-white p-4 shadow-[0_15px_40px_rgba(27,24,17,0.05)] transition-all duration-300 hover:shadow-[0_25px_50px_rgba(27,24,17,0.1)] hover:border-amber-500/30 cursor-zoom-in active:scale-[0.98]"
-              >
-                <div className="relative w-full min-h-[400px] max-h-[600px] flex items-center justify-center bg-stone-50 rounded-xl overflow-hidden p-2">
-                  <img
-                    src={imgSrc}
-                    alt={`ZAK News Bulletin Asset ${index + 1}`}
-                    className="max-h-[580px] w-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-stone-950/0 transition-colors duration-300 group-hover:bg-stone-950/[0.02] pointer-events-none" />
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          {/* Section 1: Special Offers */}
+          {renderSection("Special Offers & Packages", "Featured Deals", SPECIAL_OFFERS_IMAGES, 0)}
+
+          {/* Section 2: Group Tours */}
+          {renderSection("Group Tours", "Global Expeditions", GROUP_TOURS_IMAGES, SPECIAL_OFFERS_IMAGES.length)}
+
+          {/* Section 3: Work Permit */}
+          {renderSection("Work Permit Updates", "Employment Visas", WORK_PERMIT_IMAGES, SPECIAL_OFFERS_IMAGES.length + GROUP_TOURS_IMAGES.length)}
+
+          {/* Section 4: Study Visa */}
+          {renderSection("Study Visa Updates", "Educational Opportunities", STUDY_VISA_IMAGES, SPECIAL_OFFERS_IMAGES.length + GROUP_TOURS_IMAGES.length + WORK_PERMIT_IMAGES.length)}
         </div>
       </section>
 
-      {/* --- PREMIUM LIGHTBOX MODAL WITH ARROW SLIDER CONTROLS --- */}
       {/* --- PREMIUM LIGHTBOX MODAL WITH ARROW SLIDER CONTROLS --- */}
       <AnimatePresence>
         {activeIndex !== null && (
@@ -157,13 +176,11 @@ function NewsPage() {
               exit={{ scale: 0.97, opacity: 0.8 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
               onClick={(e) => e.stopPropagation()}
-              // 🛠️ FIX: Removed background box, overflow hidden, and added horizontal padding (px-16) to avoid arrow overlap
               className="relative flex items-center justify-center cursor-default w-full px-16 sm:px-24"
             >
               <img
-                src={NEWS_IMAGES[activeIndex]}
+                src={ALL_NEWS_IMAGES[activeIndex]}
                 alt={`News Update ${activeIndex + 1}`}
-                // 🛠️ FIX: Lowered max-height to 75-80vh so nothing gets cropped by the top/bottom UI modules
                 className="max-w-full max-h-[75vh] sm:max-h-[80vh] object-contain rounded-lg shadow-[0_25px_70px_-15px_rgba(0,0,0,0.9)]"
               />
             </motion.div>
@@ -174,7 +191,7 @@ function NewsPage() {
               animate={{ y: 0, opacity: 1 }}
               className="mt-5 sm:mt-6 flex items-center gap-4 text-xs font-mono uppercase tracking-[0.2em] bg-slate-900/80 border border-white/5 backdrop-blur-md px-6 py-2.5 rounded-full shadow-lg"
             >
-              <span className="text-amber-500 font-bold">{activeIndex + 1} / {NEWS_IMAGES.length}</span>
+              <span className="text-amber-500 font-bold">{activeIndex + 1} / {ALL_NEWS_IMAGES.length}</span>
             </motion.div>
           </motion.div>
         )}
